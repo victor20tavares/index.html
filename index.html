@@ -1,0 +1,3437 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="digitalnet.jpeg" type="image/Jpeg">
+    <title>Formulários</title>
+    <style>
+        /* Estilos principais */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000000d3;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            overflow-y: auto;
+            background-image: url('org-9490-6e8a7518.png');
+            background-repeat: no-repeat;
+            background-size: 200px; /* Mantém o tamanho original da imagem */
+            background-position: 50px top;
+        }
+        
+        /* Container principal */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 600px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Para exibir lado a lado */
+        .form-container.side-by-side {
+            flex-direction: row;
+            justify-content: space-between;
+            max-width: 1300px;
+        }
+        
+        /* Centralizar formulário de atendimento */
+        .form-container.center {
+            max-width: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: auto;
+        }
+        
+        .container {
+                    background-color: #000000;
+                    border-radius: 10px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                    padding: 30px;
+                    width: 100%;
+                    max-width: 600px;
+                    text-align: center;
+                    border: 2px solid #dadf3f;
+                    position: relative; /* Importante para posicionamento absoluto dos botões */
+                }
+        
+        .hidden {
+            display: none;
+        }
+        
+        h1 {
+            color: #dadf3f; /* Verde neon */
+        }
+        
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .form-group {
+            width: 47%;
+            margin-bottom: 10px;
+        }
+        
+        .form-groupteste {
+            width: 100%;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: flex-end; /* Alinha os itens filhos verticalmente no centro */
+            justify-content: space-between; /* Espaça os itens filhos uniformemente */
+            flex-grow: 1;
+        }
+        
+        .form-group.full-width {
+            width: 100%;
+        }
+        
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #ffffff; /* Branco */
+        }
+        
+        input[type="text"], input[type="tel"], textarea, select, input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #dadf3f;
+            border-radius: 5px;
+            background-color: #e0e0e0;
+            color: #000000;
+            box-sizing: border-box;
+        }
+        input[type="date"] {
+            width: 100%; /* Mesma largura das textarea */
+            padding: 8px; /* Mesmo padding das textarea */
+            border: 1px solid #dadf3f; /* Verde neon, mesma borda */
+            border-radius: 5px; /* Bordas arredondadas */
+            background-color: #e0e0e0; /* Mesma cor de fundo */
+            color: #000000; /* Mesma cor de texto */
+            box-sizing: border-box; /* Inclui o padding dentro da largura total */
+        }
+        
+        textarea {
+            resize: vertical;
+        }
+        
+        
+        button {
+            background-color: #dadf3f; /* Verde neon */
+            color: #000000; /* Preto */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-right: 10px;
+        }
+        
+        button:hover {
+            background-color: #a5c527; /* Verde neon mais escuro para o hover */
+        }
+        
+        .form-actions {
+            margin-top: 20px;
+        }
+        
+        #btnSemInternet {
+            display: flex;
+            justify-content: flex-end; /* Alinha o botão à direita */
+            margin-top: 20px;
+        }
+        #btnfalhamassiva {
+            
+            justify-content: flex-end; /* Alinha o botão à direita */
+            margin-top: 20px;
+        }
+        
+        #btnSemInternet {
+            background-color: #dadf3f; /* Verde neon */
+            color: #000000; /* Preto */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        #btnSemInternet:hover {
+            background-color: #a5c527; /* Verde neon mais escuro */
+        }
+        
+        .footer-note {
+            position: absolute;
+            bottom: 10px;
+            left: 325px; /* Move o elemento para o centro da tela */
+            transform: translateX(-50%) translateY(35%); /* Ajusta o elemento para estar centralizado */
+            font-size: 14px;
+            color: #ffffff; /* Branco */
+            padding: 8px; /* Opcional: adiciona espaçamento interno */
+        }
+        
+        .datetime {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 14px;
+            color: #ffffff; /* Branco */
+        }
+        
+        #abrirNovaPagina {
+            position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1000;
+        }
+        
+        .notification {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #dadf3f; /* Verde neon */
+            color: #000000; /* Preto */
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            z-index: 1000;
+        }
+        
+        
+        /* Nova classe para centralizar o formulário de atendimento novamente */
+        .form-container.center {
+            max-width: 600px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .sinal {
+            max-width: 600px;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+            /* Estilo do layout */
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #000000f5;
+                color: #ffffff;
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+        
+            .container {
+                background-color: #000000;
+                color: #ffffff;
+                transition: background-color 0.3s ease, color 0.3s ease;
+            }
+        
+            /* Outros estilos */
+            .teste {
+                    background-color: #dadf3f; /* Verde neon */
+                    color: #000000; /* Preto */
+                    border: none;
+                    border-radius: 5px;
+                    padding: 10px 15px;
+                    cursor: pointer;
+                    font-size: 16px;
+                    margin-top: 20px;
+                    margin-right: 10px;
+                    transition: background-color 0.3s ease;
+                    display: flex; /* Adicionado para centralização com Flexbox */
+                    align-items: center; /* Centraliza verticalmente */
+                    justify-content: center; /* Centraliza horizontalmente */
+                    text-align: center; /* Garante centralização do texto */
+                    height: 100%; /* Assegura que o botão preencha o contêiner pai */
+                }
+        
+                .faq {
+            display: flex;
+            justify-content: center;
+        }
+        
+                .small-button {
+            width: 30px;
+            height: 20px;
+            top: -50px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 14px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+        }
+        
+            label {
+            margin-bottom: 5px; /* Espaço entre o label e o select */
+            text-align: center; /* Centraliza o texto do label */
+        }
+        
+        .periodo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px; /* Espaço entre os elementos */
+        }
+        /* 1234 */
+            
+        
+        .main-wrapper {
+            display: flex;
+            flex-direction: column; /* Alinha os elementos em uma coluna inicialmente */
+            justify-content: flex-start;
+            align-items: center;
+            width: 90%; /* Use uma largura flexível */
+            max-width: 1200px;
+            margin: 20px auto;
+            gap: 20px;
+        }
+        
+        .client-buttons {
+            padding: 0;
+            margin: 0;
+            display: flex; /* Usa flexbox para o layout */
+            flex-direction: column; /* Alinha os botões verticalmente */
+            gap: 6px; /* Espaçamento entre os botões */
+            position: absolute;
+            left: 50%;
+            transform: translateX(-430px) translateY(200px);
+            width: 100%;
+            max-width: 100px;
+            box-sizing: border-box;
+        }
+
+        .client-buttons122 {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-width: 100px;
+    position: relative;
+    left: -35px;  /* para esquerda (mais negativo = mais esquerda) */
+    top: 195px;    /* para baixo */
+}
+
+        .client-buttons button:hover {
+            background-color: #a5c527;
+
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.5); /* Preto com 50% de transparência */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(68, 231, 18, 0.5);
+            text-align: center;
+            border: 2px solid #dadf3f;
+            margin-top: 80px;
+        }
+        
+        .client-slot button {
+            background-color: #dadf3f; /* Verde neon */
+            color: #000000; /* Preto */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            width: 100px; /* Largura fixa para garantir consistência */
+            white-space: nowrap; /* Impede quebra de linha */
+            overflow: hidden; /* Esconde o texto excedente */
+            text-overflow: ellipsis; /* Adiciona reticências ao texto cortado */
+            text-align: center; /* Centraliza o texto dentro do botão */
+        }
+        
+        /* Media Queries para ajustes em telas menores */
+        @media (max-width: 768px) {
+            .main-wrapper {
+                flex-direction: column; /* Alinha os elementos em uma coluna */
+            }
+            .form-container {
+                max-width: 100%; /* Ajusta a largura para telas menores */
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .client-slot button {
+                font-size: 12px;
+                padding: 8px 10px;
+                width: 80px; /* Ajusta a largura para telas muito pequenas */
+            }
+        }
+        
+        .selected {
+            border: 2px solid #000000; /* Borda preta para destacar o botão selecionado */
+            /* Você pode adicionar mais estilos se desejar, como mudar a cor de fundo */
+        }
+        
+            /* Ocultar contêineres dinâmicos inicialmente */
+            #reagendamento-container, #cancelamento-container {
+                display: none;
+            }
+        
+            .menu-hamburguer {
+                cursor: pointer;
+                position: fixed;
+                top: 20px;
+                left: 20px;
+                z-index: 1001; /* Aumentado para ficar acima do menu escondido */
+            }
+        
+            .bar {
+                width: 35px;
+                height: 5px;
+                background-color: white;
+                margin: 6px 0;
+                transition: 0.4s;
+            }
+        
+            .menu-escondido {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.315);
+            transition: 0.3s;
+            overflow-y: auto;
+            padding: 35px 10px 10px 20px; /* Adiciona padding-top para espaçamento inicial */
+            box-sizing: border-box;
+            z-index: 1000;
+        }
+        
+        .menu-escondido.aberto {
+                left: 0; /* Mudado para left */
+            }
+        
+            .menu-escondido button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: -10px 0; /* Margem padrão entre botões */
+            background-color: #dadf3f;
+            color: black;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+        }
+        
+        .menu-escondido button:first-of-type {
+            margin-top: 30px; /* Maior margem apenas para o primeiro botão */
+        }
+        
+            .menu-escondido button:hover {
+                background-color: #a5c527;
+            }
+        
+            .overlay {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+        
+            .overlay.ativo {
+                display: block;
+            }
+        
+            /* Estilos para o modal */
+            .modal-container {
+            font-family: Arial, sans-serif;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(41, 91, 165, 0.897); /* Fundo semitransparente azul */
+            display: flex;
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center; /* Centraliza verticalmente */
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background-color: rgba(0, 0, 0, 0.5); /* Preto com 50% de transparência */
+            border-radius: 10px;
+            padding: 30px;
+            width: auto; /* Ajuste para auto ou uma largura específica conforme necessário */
+            max-width: 600px; /* Ajuste a largura máxima conforme necessário */
+            text-align: center;
+            border: 2px solid #dadf3f;
+            position: relative;
+            color: #ffffff; /* Texto branco */
+            /* Novos estilos para centralização */
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Estilos para os elementos dentro do modal */
+        .modal-content h1 {
+            color: #dadf3f;
+        }
+        
+        .modal-content .form-group {
+            margin-bottom: 5px;
+            text-align: left;
+            width: 100%;
+        }
+        
+        .modal-content label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .modal-content input[type="text"],
+        .modal-content input[type="tel"],
+        .modal-content textarea,
+        .modal-content select,
+        .modal-content input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #dadf3f;
+            border-radius: 5px;
+            background-color: #e0e0e0;
+            color: #000;
+        }
+        
+        .modal-content button {
+            background-color: #dadf3f;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .modal-content button:hover {
+            background-color: #a5c527;
+        }
+        
+        .modal-content .form-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .modal-content .agendamento-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 100%;
+        }
+        
+        .modal-content .agendamento-item {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        
+        .modal-content .periodo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .modal-content .small-button {
+            width: 30px;
+            height: 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+        }
+        
+        .modal-content .input-with-dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        
+        .modal-content .dropdown-menu {
+            display: none; /* Inicia escondido e será mostrado via JavaScript */
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #e0e0e0;
+            color: #000;
+            border: 1px solid #dadf3f;
+            border-radius: 5px;
+            width: calc(100% - 10px); /* Ajuste para garantir que o menu não ultrapasse o elemento pai */
+            box-sizing: border-box;
+            z-index: 1000;
+            padding: 5px 0; /* Ajuste o padding conforme necessário */
+            font-size: 14px;
+            margin-top: 2px; /* Espaço pequeno para separar do input */
+        }
+        
+        .modal-content .dropdown-menu div:hover {
+            background-color: #dadf3f;
+        }
+        
+        .close-button {
+            font-size: 24px; /* Aumenta o tamanho do ícone de fechamento */
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px; /* Define a largura do botão */
+            height: 20px; /* Define a altura do botão para igualar a largura */
+            padding: 5px;
+            background-color: #dadf3f;
+            color: white;
+            border-radius: 50%; /* Garante que o botão seja um círculo */
+            border: none;
+            display: flex; /* Usa flexbox para centralizar o conteúdo */
+            align-items: center; /* Centraliza verticalmente o conteúdo */
+            justify-content: center; /* Centraliza horizontalmente o conteúdo */
+            text-align: center;
+            line-height: 1;
+        }
+        
+        /* Estilo para quando o mouse passa sobre o botão */
+        .close-button:hover {
+            background-color: #a5c527; /* Cor de fundo mais escura para o hover */
+        }
+        
+        .dropdown-button {
+            background-color: #dadf3f;
+            border: none; /* Remove a borda padrão */
+            cursor: pointer; /* Muda o cursor para indicar que é clicável */
+            padding: 8px 12px; /* Ajuste o padding conforme necessário */
+        }
+        
+        
+        
+        .dropdown-button:hover {
+            background-color: #0056b3; /* Cor de fundo ao passar o mouse */
+        }
+        
+        select {
+            height: 40px; /* Ajuste a altura conforme necessário */
+            border-radius: 5px;
+            /* Outros estilos conforme necessário */
+        }
+        
+        .form-groupteste {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centraliza os itens filhos (label, input com dropdown) no eixo cruzado */
+            width: 100%;
+            margin-bottom: -10px;
+        }
+        
+        .input-with-dropdown {
+            display: flex;
+            align-items: center; /* Alinha o input e o botão verticalmente */
+            width: 100%;
+        }
+        
+        .input-with-dropdown input {
+            flex-grow: 1; /* Faz o input ocupar o espaço disponível */
+            border: 1px solid #ccc; /* Apenas para visualização, ajuste conforme necessário */
+            padding: 8px;
+        }
+        
+        .dropdown-button {
+            background-color: #dadf3f;
+            border: none; /* Remove a borda padrão */
+            cursor: pointer; /* Muda o cursor para indicar que é clicável */
+            padding: 8px 12px; /* Ajuste o padding conforme necessário */
+            height: 33px; /* Ajuste para corresponder à altura do seu select */
+            margin-bottom: 20px; /* Ajuste fino */
+        }
+        
+        .dropdown-menu {
+            position: absolute; /* Posiciona o menu dropdown em relação ao seu contêiner */
+            background-color: #fff;
+            border: 1px solid #ccc; /* Apenas para visualização, ajuste conforme necessário */
+            width: calc(100% - 2px); /* Ajusta a largura para corresponder ao input, considerando a borda */
+            z-index: 1000; /* Garante que o menu fique acima de outros elementos */
+        }
+        
+        .dropdown-menu div {
+            padding: 8px;
+            cursor: pointer;
+        }
+        
+        .dropdown-menu div:hover {
+            background-color: #f0f0f0; /* Cor de fundo ao passar o mouse */
+        }
+
+        #btnvagas {
+    position: relative;
+    top: 0px;
+    left: 0px;
+    padding: 5px 10px;
+    background-color: #dadf3f;
+    color: black;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    z-index: 0; /* Garante que o botão tenha sobreposição adequada */
+  }
+
+  #btnnotion {
+      position: fixed;
+      top: -65px;
+      left: 95px;
+      z-index: 999999999;
+      transition: top 0.3s, left 0.3s;
+    }
+    #btnnotion1 {
+      position: fixed;
+      top: -370px;
+      left: 165px;
+      z-index: 999999999;
+      transition: top 0.3s, left 0.3s;
+    }
+    #btnnotion.montar-pos {
+      top: -65px;
+      left: 150px;
+      z-index: 999999999;
+    }
+
+ /* Estiliza o modal e os botões */
+ .modal-container1 {
+        display: flex;
+    }
+
+    .left-buttons {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        left: 0;
+        top: 50px;
+    }
+
+    .button40 {
+    padding: 5px 10px; /* Reduz o tamanho dos botões */
+    margin: 5px 0;
+    font-size: 14px; /* Reduz o tamanho da fonte dos botões */
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.message-container {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    left: 500px;
+    background-color: #ffffff;
+    color: #000000;
+    width: center; /* Garante que ele ocupe toda a largura disponível */
+    max-width: 100%; /* Impede que o conteúdo ultrapasse os limites */
+    word-wrap: break-word; /* Quebra palavras longas automaticamente */
+    white-space: pre-wrap; /* Mantém quebras de linha no texto e ajusta o tamanho */
+    overflow: auto; /* Adiciona uma barra de rolagem, se necessário */
+    box-sizing: border-box; /* Garante que padding e bordas sejam incluídos na largura total */
+    min-height: 500px; /* Altura mínima para garantir que o contêiner não fique muito pequeno */
+}
+
+
+    .copy-button {
+        margin-top: 5px;
+        padding: 5px 10px;
+        font-size: 14px;
+        background-color: #28a745;
+        color: #ffffff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .modal-container1 {
+    font-family: Arial, sans-serif;
+    position: fixed;
+    z-index: 100;
+    top: 53%; /* Centraliza verticalmente */
+    left: 54%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta para o centro */
+    display: flex;
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    max-width: 900px; /* Limite maior de largura */
+    max-height: 90vh; /* Altura maior para mostrar mais conteúdo */
+    
+}
+
+.modal-content1 {
+    background-color: rgb(32, 31, 31); /* Preto com 50% de transparência */
+    border-radius: 10px;
+    padding: 20px;
+    width: auto; /* Ajusta a largura dinamicamente */
+    max-width: 90%; /* Mantém o modal responsivo */
+    max-height: 80vh; /* Limita a altura para 80% da tela */
+    overflow-y: auto; /* Ativa rolagem vertical se necessário */
+    border: 2px solid #dadf3f;
+    color: #ffffff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    font-size: 14px; /* Reduz o tamanho da fonte para ganhar espaço */
+}
+
+.voltar-button {
+    position: absolute;
+    right: 20px;
+    top: 90px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #dadf3f;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-button1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+    position: absolute;
+    top: 250px;
+    right: 120px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.close-button2 {
+            font-size: 24px; /* Aumenta o tamanho do ícone de fechamento */
+            cursor: pointer;
+            position: absolute;
+            top: 35px;
+            right: 95px;
+            width: 20px; /* Define a largura do botão */
+            height: 20px; /* Define a altura do botão para igualar a largura */
+            padding: 5px;
+            background-color: #dadf3f;
+            color: white;
+            border-radius: 50%; /* Garante que o botão seja um círculo */
+            border: none;
+            display: flex; /* Usa flexbox para centralizar o conteúdo */
+            align-items: center; /* Centraliza verticalmente o conteúdo */
+            justify-content: center; /* Centraliza horizontalmente o conteúdo */
+            text-align: center;
+            line-height: 1;
+        }
+
+        .p-copiavel {
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+    color: #fff;               /* Cor padrão do texto */
+}
+
+.p-copiavel:hover {
+    color: #dadf3f;            /* Cor quando passar o mouse */
+    background: #1e3250;       /* Um fundo levemente diferente ao passar o mouse */
+}
+
+.p-copiavel1 {
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+    color: #000; /* Preto fixo */
+    background: transparent;
+}
+.p-copiavel1:hover {
+    color: #dadf3f;      /* Cor destaque ao passar o mouse */
+  
+}
+
+    /* Botão fixo lateral direita */
+    .menu-toggle-direita {
+      position: absolute; right:0; top:50%; transform:translateY(-50%);
+      background: #ff9800; color: #fff; padding:8px 15px 8px 8px;
+      border-radius: 4px 0 0 4px; cursor: pointer;
+      z-index: 1050; font-weight: bold;
+    }
+
+    .menu-slide-direita {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* ou center */
+  align-items: flex-end;
+  height: 100vh;
+  padding-top: 60px; /* Espaço do topo */
+}
+    .menu-slide-direita.aberto { right: 0; }
+    main { margin:0 0; padding: 32px; text-align: center;}
+    /* Modal (igual ao anterior) */
+    #notepad-modal {
+      display: none;
+      position: fixed;
+      left: 0; top: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.32);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+    #notepad-modal.ativo { display: flex; }
+    #notepad-modal .modal-box {
+      background: #fff;
+      border-radius: 6px;
+      padding: 18px;
+      width: 400px;
+      box-shadow: 0 8px 32px #0004;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+    }
+
+    .notepad-actions { display: flex; gap: 8px; justify-content: flex-end;}
+    .close-btn { position:absolute; right:16px; top:6px; font-size:1.4em; cursor:pointer;}
+
+    /* Menu fixo à direita */
+    .menu-fixo-direita {
+      position: fixed;
+      right: 0; top: 0;
+      width: 180px; height: 100vh;
+      box-shadow: -2px 0 8px #0002;
+      padding: 16px;
+      z-index:100;
+      display: flex; flex-direction: column; gap: 10px;
+      align-items: flex-end;
+    }
+    main {
+      margin-left: 200px;
+      margin-right: 200px;
+      padding: 32px;
+    }
+    /* Modal do bloco de notas */
+    #notepad-modal {
+      display: none;
+      position: fixed;
+      left: 0; top: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.32);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+    #notepad-modal.ativo {
+      display: flex;
+    }
+    #notepad-modal .modal-box {
+      background: #fff;
+      border-radius: 6px;
+      padding: 18px;
+      width: 600px;
+      box-shadow: 0 8px 32px #0004;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      padding: 32px 32px 24px;
+    }
+    #notepad-text {
+  width: 100%;
+  height: 500px;
+  font-size: 1.1em;
+  font-family: "Consolas", monospace;
+  padding: 12px;
+  resize: vertical;
+}
+    .notepad-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+    .close-btn {
+      position: absolute;
+      right: 16px; top: 6px;
+      font-size: 1.4em;
+      cursor: pointer;
+      color: #444;
+      opacity: 0.7;
+    }
+    .close-btn:hover { opacity: 1; color: #d44;}
+
+    .menu-hamburguerdireita {
+  position: absolute;
+  left: 95%; top: 30px;
+  width: 40px; height: 40px;
+  z-index: 1050; cursor: pointer;
+  display: flex; flex-direction: column; justify-content: center; gap: 6px;
+  background: none; border: none; /* Garante que não há cor de fundo ou borda */
+}
+.menu-hamburguerdireita .bar2 {
+  width: 28px;
+  height: 5px;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: 0.2s;
+  display: block; /* Garantia extra */
+}
+.menu-slide-direita {
+  position: fixed; top:0; right: -220px; width:200px; height:100vh;
+  padding: 18px; z-index: 1;
+  display: flex; flex-direction: column; gap: 10px; align-items: flex-end;
+  transition: right 0.25s;
+
+}
+.menu-slide-direita.aberto { right: 0; }
+#overlay {
+  display: none;
+  position: fixed; left:0; top:0; width:100vw; height:100vh;
+  background: rgba(0,0,0,0.18);
+  z-index: 1090;
+}
+#overlay.ativo { display: none; }
+#notepad-modal {
+  display: none;
+  position: fixed;
+  left: 0; top: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.32);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+}
+#notepad-modal.ativo { display: flex; }
+#notepad-modal .modal-box {
+  background: #fff;
+  border-radius: 6px;
+  padding: 18px;
+  width: 800px;
+  box-shadow: 0 8px 32px #0004;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+}
+
+.notepad-actions { display: flex; gap: 8px; justify-content: flex-end;}
+.close-btn { position:absolute; right:16px; top:6px; font-size:1.4em; cursor:pointer;}
+
+/* Seu body e dark-mode (ajustado para imagem) */
+body {
+  background: #295ba5;
+  color: #222;
+  transition: background 0.3s, color 0.3s;
+  background-image: url('org-9490-6e8a7518.png');
+  background-repeat: no-repeat;
+  background-size: 180px;
+  background-position: 40px bottom;
+}
+body.dark-mode {
+  background: #181818;
+  color: #f5f5f5;
+  background-image: url('org-9490-6e8a7518.png');
+  background-repeat: no-repeat;
+  background-size: 180px;
+  background-position: 40px bottom;
+}
+
+/* Bloco de notas ajustado para dark-mode também */
+#notepad-modal .modal-box {
+  background: #fff;
+  color: #333;
+  transition: background 0.3s, color 0.3s;
+}
+body.dark-mode #notepad-modal .modal-box {
+  background: #222;
+  color: #eee;
+}
+
+/* ------ Estilo Toggle Switch ------ */
+.toggle-dark-mode {
+  position: absolute;
+  top: 30px;
+  right: 7%;
+  z-index: 2001;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.toggle-dark-mode input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-dark-mode .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: #000000;
+  border-radius: 24px;
+  transition: background 0.2s;
+}
+
+.toggle-dark-mode .slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 2px; bottom: 2px;
+  background-color: #fff;
+  border-radius: 50%;
+  transition: transform 0.2s, background 0.2s;
+  box-shadow: 0 2px 4px #0001;
+}
+
+.toggle-dark-mode input:checked + .slider {
+  background: #ffffff;
+}
+.toggle-dark-mode input:checked + .slider:before {
+  transform: translateX(20px);
+  background: #181818;
+}
+
+.toggle-dark-mode .slider::after {
+  position: absolute;
+  right: 6px;
+  top: 2px;
+  font-size: 16px;
+  color: #fff;
+  transition: opacity 0.2s;
+}
+.toggle-dark-mode input:checked + .slider::after {
+  color: #fff;
+  left: 6px;
+  right: auto;
+}
+/* Opcional: animação */
+.toggle-dark-mode .slider, 
+.toggle-dark-mode .slider:before {
+  transition: all 0.2s cubic-bezier(.4,0,.2,1);
+}
+
+.grupo-botoes-especiais {
+    margin-top: 80px;
+}
+
+#btnverificacao{
+    padding: 10px 11px;
+    color: #000000;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#btnfalhamassiva{
+    padding: 3px 21px;
+    color: #000000;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;  
+}
+
+#btnAplicativo{
+    padding: 10px 16px;
+    color: #000000;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;  
+}
+
+button:hover, #btnverificacao:hover {
+    background-color: #a5c527;
+}
+
+
+</style>
+<script>
+   
+function crie() {
+    // 1. Limpa TODOS os campos do formulário form-falhamassiva5
+    const campos = [
+        'nomeos',
+        'planoInput',
+        'motivo',
+        'agendado1',
+        'periodo1',
+        'agendado2',
+        'periodo2',
+        'Obs'
+    ];
+
+    campos.forEach(id => {
+        const elemento = document.getElementById(id);
+        if (elemento) {
+            elemento.value = '';
+        }
+    });
+
+    // 2. Fecha o dropdown do plano
+    const dropdown = document.getElementById('dropdownMenu');
+    if (dropdown) {
+        dropdown.style.display = 'none';
+    }
+
+    // 3. Mostra notificação de sucesso
+    mostrarNotificacao('Formulário de encaixe zerado com sucesso!');
+}
+   
+// Função para atualizar a data e hora
+function atualizarDataHora() {
+    const agora = new Date();
+    const dia = String(agora.getDate()).padStart(2, '0');
+    const mes = String(agora.getMonth() + 1).padStart(2, '0');
+    const ano = agora.getFullYear();
+    const hora = String(agora.getHours()).padStart(2, '0');
+    const minutos = String(agora.getMinutes()).padStart(2, '0');
+    const segundos = String(agora.getSeconds()).padStart(2, '0');
+
+    const dataHora = `${dia}/${mes}/${ano} ${hora}:${minutos}:${segundos}`;
+    document.getElementById('datetime').textContent = dataHora;
+}
+
+
+// Estrutura para armazenar dados de cada slot
+const slots = {
+    1: {},
+    2: {},
+    3: {},
+    4: {},
+    5: {}
+};
+
+let currentSlot = null; // Slot atualmente selecionado
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Inicializa o slot atual como 1 para garantir que os dados sejam salvos desde o início
+    currentSlot = 1;
+    selecionarCliente(currentSlot.toString());
+
+    // Adiciona o ouvinte de eventos ao campo de nome para atualização em tempo real
+    const nomeInput = document.getElementById('nome');
+    nomeInput.addEventListener('input', function() {
+        if (currentSlot !== null) {
+            const nome = nomeInput.value;
+            slots[currentSlot]['nome'] = nome; // Salva o nome no slot atual em tempo real
+            atualizarNomeNosBotoes(); // Atualiza o display do nome em tempo real
+        }
+    });
+
+    // Adiciona listeners aos botões de seleção de cliente
+    document.querySelectorAll('.client-slot button').forEach(button => {
+        button.addEventListener('click', function() {
+            const slotNumber = this.parentElement.getAttribute('data-slot');
+            selecionarCliente(slotNumber);
+        });
+    });
+});
+
+
+function atualizarNomeNosBotoes() {
+    for (let slotNumber in slots) {
+        const nome = slots[slotNumber]['nome'] || `Cliente ${slotNumber}`;
+        const botaoCliente = document.querySelector(`.client-slot[data-slot="${slotNumber}"] button`);
+        if (botaoCliente) {
+            botaoCliente.textContent = nome;
+        }
+    }
+}
+
+function limparFormulario() {
+    const form = document.getElementById('form-atendimento');
+    if (form) {
+        form.reset();
+
+        const checkboxes = form.querySelectorAll('input[type=checkbox]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+
+        atualizarNomeNosBotoes(''); // Resetar os nomes nos botões para o padrão
+
+        const reagendamentoContainer = document.getElementById('reagendamento-container');
+        const cancelamentoContainer = document.getElementById('cancelamento-container');
+        if (reagendamentoContainer) {
+            reagendamentoContainer.innerHTML = '';
+        }
+        if (cancelamentoContainer) {
+            cancelamentoContainer.innerHTML = '';
+        }
+
+        const nomeDisplay = document.getElementById(`client-name-${currentSlot}`);
+        if (nomeDisplay) {
+            nomeDisplay.innerHTML = '';
+        }
+    }
+     }
+
+// Função modificada para salvar dados no slot
+function salvarDados(slotNumber) {
+    const form = document.getElementById('form-atendimento');
+    const formData = new FormData(form);
+    slots[slotNumber] = {};
+    for (let [key, value] of formData.entries()) {
+        slots[slotNumber][key] = value;
+    }
+    atualizarNomeNosBotoes(formData.get('nome')); // Atualiza os nomes nos botões após salvar
+}
+
+// Função para carregar dados do slot selecionado no formulário
+function carregarDados(slotNumber) {
+    const data = slots[slotNumber];
+    const form = document.getElementById('form-atendimento');
+
+    for (let key in data) {
+        if (data.hasOwnProperty(key)) {
+            const field = document.getElementById(key);
+            if (field) {
+                if (field.type === 'checkbox') {
+                    field.checked = data[key] === 'on';
+                } else {
+                    field.value = data[key];
+                }
+            }
+        }
+    }
+    atualizarNomeNosBotoes(data['nome']); // Atualiza os nomes nos botões ao carregar os dados
+}
+
+function selecionarCliente(slotNumber) {
+    // Remove a classe 'selected' de todos os botões
+    const buttons = document.querySelectorAll('.client-slot button');
+    buttons.forEach(button => {
+        button.classList.remove('selected');
+    });
+
+    if (currentSlot !== null && currentSlot !== slotNumber) {
+        salvarDados(currentSlot); // Salva os dados do slot atual antes de alternar
+    }
+
+    currentSlot = slotNumber; // Atualiza o slot atual
+
+    if (Object.keys(slots[slotNumber] || {}).length === 0) {
+        limparFormulario(); // Limpa o formulário se o slot estiver vazio (novo atendimento)
+    } else {
+        carregarDados(slotNumber); // Carrega os dados se o slot não estiver vazio
+    }
+
+    // Adiciona a classe 'selected' ao botão atualmente selecionado
+    const selectedButton = document.querySelector(`.client-slot[data-slot="${currentSlot}"] button`);
+    if (selectedButton) {
+        selectedButton.classList.add('selected');
+    }
+}
+
+
+
+// Função para atualizar o nome do cliente no display
+function atualizarNomeClienteDisplay(slotNumber) {
+    const nome = slots[slotNumber]['nome'] || '';
+    const nomeDisplay = document.getElementById(`client-name-${slotNumber}`);
+    nomeDisplay.textContent = nome.split(' ')[0] || '';
+}
+
+// Função para atualizar o nome do cliente no botão
+function atualizarNomeClienteDisplay(slotNumber) {
+    const nome = slots[slotNumber]['nome'] || `Cliente ${slotNumber}`;
+    const botaoCliente = document.querySelector(`.client-slot[data-slot="${slotNumber}"] button`);
+    if (botaoCliente) {
+        botaoCliente.textContent = nome;
+    }
+}
+
+document.querySelectorAll('.client-slot button').forEach(button => {
+    button.addEventListener('click', function() {
+        const slotNumber = this.parentElement.getAttribute('data-slot');
+        selecionarCliente(slotNumber);
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const buttons = document.querySelectorAll('.client-slot button');
+
+    buttons.forEach(button => {
+        let fullName = button.textContent.trim();
+        let firstName = fullName.split(' ')[0]; // Pega o primeiro nome
+
+        // Limita o texto a um certo número de caracteres
+        const maxChars = 9; // Número máximo de caracteres permitidos
+        if (firstName.length > maxChars) {
+            firstName = firstName.substring(0, maxChars) + '...'; // Trunca o texto e adiciona reticências
+        }
+
+        button.textContent = firstName; // Define o texto do botão
+    });
+});
+// Adicione aqui as funções adicionais como copiarDados, adicionarProblemas, etc.
+
+    function mostrarNotificacao(mensagem) {
+        const notificacao = document.getElementById('notification');
+        notificacao.textContent = mensagem;
+        notificacao.style.display = 'block';
+        setTimeout(() => {
+            notificacao.style.display = 'none';
+        }, 3000); // Notificação desaparece após 3 segundos
+    }
+
+
+    function copiarDados() {
+        const relatoCliente = document.getElementById('relato_cliente').value || "N/A";
+        const procedimentosRealizados = document.getElementById('procedimentos_realizados').value || "N/A";
+        const nome = document.getElementById('nome').value || "N/A";
+        const telefone = document.getElementById('telefone').value || "N/A";
+        const user = document.getElementById('user').value || "N/A";
+        const Senha = document.getElementById('senha').value || "N/A";
+        const pontoAcesso = document.getElementById('ponto_acesso').value || "N/A";
+        const protocolo = document.getElementById('protocolo').value || "N/A";
+        const sinal = document.getElementById('sinal').value || "N/A";
+        const clienteConfirmou = document.getElementById('cliente-confirmou').checked;
+
+        const texto =`
+============================================
+Relato do Cliente: ${relatoCliente}
+
+Procedimentos Realizados: ${procedimentosRealizados}
+${clienteConfirmou ? 'Cliente confirmou que melhorou: SIM' : ''}
+============================================
+
+Usuário: ${user}
+Senha: ${Senha}
+Ponto de Acesso: ${pontoAcesso}
+Sinal: ${sinal}
+
+============================================
+Nome: ${nome} Telefone: ${telefone}
+Protocolo: ${protocolo}
+============================================`;
+
+
+        navigator.clipboard.writeText(texto).then(() => {
+            mostrarNotificacao('Dados copiados para a área de transferência!');
+        }).catch(err => {
+            console.error('Falha ao copiar!', err);
+        });
+    }
+
+
+    function copiarDadosGerarOS() {
+    const agendadoRaw = document.getElementById('agendado').value || "N/A";
+    const agendado = agendadoRaw !== "N/A" ? formatarData(agendadoRaw) : "N/A";
+    const periodoSelect = document.getElementById('periodo');
+    const periodo = periodoSelect.options[periodoSelect.selectedIndex].text || "N/A";
+    const relatoCliente = document.getElementById('relato_cliente-gerar-os').value || "N/A";
+    const procedimentosRealizados = document.getElementById('problema_identificado').value || "N/A";
+    const nome = document.getElementById('nome-gerar-os').value || "N/A";
+    const telefone = document.getElementById('telefone-gerar-os').value || "N/A";
+    const user = document.getElementById('user-gerar-os').value || "N/A";
+    const senha = document.getElementById('senha-gerar-os').value || "N/A";
+    const pontoAcesso = document.getElementById('ponto_acesso-gerar-os').value || "N/A";
+    const protocolo = document.getElementById('protocolo-gerar-os').value || "N/A";
+    const geolocalizacao = document.getElementById('geolocalizacao').value || "N/A";
+    const sinal = document.getElementById('sinal-gerar-os').value || "N/A";
+    
+    const texto = `==================================================
+
+Agendado: ${agendado} ${periodo}
+
+===================================================
+Relato do Cliente: ${relatoCliente}
+===================================================
+Procedimentos Realizados: ${procedimentosRealizados}
+===================================================
+
+Ponto de Acesso: ${pontoAcesso}
+
+Sinal: ${sinal}
+
+Usuário: ${user} Senha: ${senha}
+
+Nome: ${nome} Telefone: ${telefone}
+
+Protocolo: ${protocolo}
+
+Geolocalização: ${geolocalizacao}
+
+======================================================`;
+    
+
+
+    // Código para copiar 'texto' para a área de transferência
+    navigator.clipboard.writeText(texto)
+        .then(() => {
+            // Exibir notificação de sucesso
+            const notification = document.getElementById('notification');
+            notification.textContent = "Dados copiados com sucesso!";
+            notification.style.display = "block";
+            setTimeout(() => {
+                notification.style.display = "none";
+            }, 3000);
+        })
+        .catch(err => {
+            // Exibir notificação de erro
+            const notification = document.getElementById('notification');
+            notification.textContent = "Erro ao copiar os dados.";
+            notification.style.backgroundColor = "red";
+            notification.style.display = "block";
+            setTimeout(() => {
+                notification.style.display = "none";
+                notification.style.backgroundColor = "#dadf3f"; // Reset background color
+            }, 3000);
+        });
+}
+
+
+    function zerarDadosGerarOS() {
+    document.getElementById('form-gerar-os').reset();
+    document.getElementById('formulario-gerar-os').classList.add('hidden');
+    document.getElementById('btnnotion').classList.remove('montar-pos');
+    
+    const formContainer = document.querySelector('.form-container');
+    formContainer.classList.remove('side-by-side'); // Remover o layout lado a lado
+    formContainer.classList.add('center'); // Adicionar a classe que centraliza
+
+    // Garantir que o container de Gerar OS seja escondido
+    const gerarOsContainer = document.getElementById('gerar-os-container');
+    if (gerarOsContainer) {
+        gerarOsContainer.classList.add('hidden');
+    }
+
+    const clientButtons = document.getElementsByClassName('client-buttons')[0];
+    if (clientButtons) {
+        clientButtons.style.display = 'block';
+    }
+    
+}
+
+
+function zerarDadosAtendimento() {
+    localStorage.removeItem('mascara_form_' + window.currentSlot);
+    document.getElementById('form-atendimento').reset();
+    salvarCamposCliente(window.currentSlot);
+}
+
+// 1. Variável global para o cliente ativo
+window.currentSlot = 1; // Começa no Cliente 1
+
+// 2. Função para selecionar o cliente e restaurar formulário correspondente
+function selecionarCliente(num) {
+    window.currentSlot = num;
+    // Destaca o botão correto
+    document.querySelectorAll('.client-slot button').forEach((btn, idx) => {
+        btn.textContent = `Cliente ${idx + 1}`;
+    });
+    const button = document.querySelector(`.client-slot:nth-child(${num}) button`);
+    if (button) button.textContent = `Cliente ${num} (selecionado)`;
+
+    // Salva o slot ativo para persistir entre recarregamentos
+    localStorage.setItem("mascara_form_cliente_atual", num);
+
+    // Chama função para restaurar os dados desse cliente
+    restaurarCamposPorCliente();
+}
+
+// 3. Salvar os dados do cliente ativo SEMPRE que algo mudar
+function salvarCamposPorCliente() {
+    const form = document.getElementById('form-atendimento');
+    if (!form) return;
+    const data = {};
+    Array.from(form.elements).forEach(el => {
+        if (el.name) {
+            if (el.type === "checkbox" || el.type === "radio") {
+                data[el.name] = el.checked;
+            } else {
+                data[el.name] = el.value;
+            }
+        }
+    });
+    localStorage.setItem("mascara_form_" + window.currentSlot, JSON.stringify(data));
+}
+
+// 4. Restaurar dados do cliente ativo
+function restaurarCamposPorCliente() {
+    const form = document.getElementById('form-atendimento');
+    if (!form) return;
+    const salvo = localStorage.getItem("mascara_form_" + window.currentSlot);
+    const dados = salvo ? JSON.parse(salvo) : {};
+    Array.from(form.elements).forEach(el => {
+        if (el.name && dados.hasOwnProperty(el.name)) {
+            if (el.type === "checkbox" || el.type === "radio") {
+                el.checked = dados[el.name];
+            } else {
+                el.value = dados[el.name];
+            }
+        } else {
+            // Limpa caso não exista
+            if (el.type === "checkbox" || el.type === "radio") el.checked = false;
+            else el.value = "";
+        }
+    });
+}
+
+// 5. Ao iniciar a página, restaura o cliente ativo e dados dele
+document.addEventListener('DOMContentLoaded', function() {
+    // Recupera qual cliente estava ativo por último
+    let slotSalvo = localStorage.getItem("mascara_form_cliente_atual");
+    if (slotSalvo) {
+        window.currentSlot = parseInt(slotSalvo, 10);
+    } else {
+        window.currentSlot = 1;
+    }
+    selecionarCliente(window.currentSlot);
+
+    // Reinstala eventos para salvar para o cliente ativo
+    const form = document.getElementById('form-atendimento');
+    if (form) {
+        form.addEventListener('input', salvarCamposPorCliente);
+        form.addEventListener('change', salvarCamposPorCliente);
+    }
+});
+
+// 6. Garante salvar antes de sair
+window.addEventListener("beforeunload", salvarCamposPorCliente);
+
+window.currentSlot = parseInt(localStorage.getItem("mascara_form_cliente_atual")) || 1;
+const totalSlots = 5;
+
+// --- Função para salvar TODOS os campos do formulário para um slot ---
+function salvarCamposCliente(slot) {
+    const form = document.getElementById('form-atendimento');
+    if (!form) return;
+    const data = {};
+    Array.from(form.elements).forEach(el => {
+        if (el.name) {
+            if (el.type === "checkbox" || el.type === "radio") {
+                data[el.name] = el.checked;
+            } else {
+                data[el.name] = el.value;
+            }
+        }
+    });
+    localStorage.setItem('mascara_form_' + slot, JSON.stringify(data));
+    atualizarBotoesClientes();
+}
+
+// --- Função para restaurar TODOS os campos do formulário para um slot ---
+function restaurarCamposCliente(slot) {
+    const form = document.getElementById('form-atendimento');
+    if (!form) return;
+    const salvo = localStorage.getItem('mascara_form_' + slot);
+    const dados = salvo ? JSON.parse(salvo) : {};
+    Array.from(form.elements).forEach(el => {
+        if (el.name && dados.hasOwnProperty(el.name)) {
+            if (el.type === "checkbox" || el.type === "radio") {
+                el.checked = dados[el.name];
+            } else {
+                el.value = dados[el.name];
+            }
+        } else {
+            if (el.type === "checkbox" || el.type === "radio") el.checked = false;
+            else el.value = "";
+        }
+    });
+    atualizarBotoesClientes();
+}
+
+
+function atualizarBotoesClientes() {
+    for (let i = 1; i <= totalSlots; i++) {
+        const btn = document.querySelector('.client-slot[data-slot="' + i + '"] button');
+        let nome = "";
+        const salvo = localStorage.getItem('mascara_form_' + i);
+        if (salvo) {
+            const dados = JSON.parse(salvo);
+            nome = dados.nome || "";
+        }
+        if (btn) {
+            btn.textContent = nome
+                ? nome + (window.currentSlot === i ? " (selecionado)" : "")
+                : ("Cliente " + i + (window.currentSlot === i ? " (selecionado)" : ""));
+        }
+    }
+}
+
+function selecionarCliente(slot) {
+    window.currentSlot = slot;
+    localStorage.setItem("mascara_form_cliente_atual", slot);
+    restaurarCamposCliente(slot);
+    ativarEventoCliente(slot);
+}
+
+function ativarEventoCliente(slot) {
+    const form = document.getElementById('form-atendimento');
+    if (!form) return;
+    form.oninput = function() {
+        if (window.currentSlot === slot) {
+            salvarCamposCliente(slot);
+        }
+    };
+    form.onchange = function() {
+        if (window.currentSlot === slot) {
+            salvarCamposCliente(slot);
+        }
+    };
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    atualizarBotoesClientes();
+    selecionarCliente(window.currentSlot);
+});
+
+    function montarOS() {
+    document.getElementById('agendado').value = "N/A"; // Ou defina um valor padrão se necessário
+    document.getElementById('nome-gerar-os').value = document.getElementById('nome').value;
+    document.getElementById('telefone-gerar-os').value = document.getElementById('telefone').value;
+    document.getElementById('user-gerar-os').value = document.getElementById('user').value;
+    document.getElementById('senha-gerar-os').value = document.getElementById('senha').value;
+    document.getElementById('ponto_acesso-gerar-os').value = document.getElementById('ponto_acesso').value;
+    document.getElementById('protocolo-gerar-os').value = document.getElementById('protocolo').value;
+    document.getElementById('relato_cliente-gerar-os').value = document.getElementById('relato_cliente').value;
+    document.getElementById('problema_identificado').value = document.getElementById('procedimentos_realizados').value;
+    document.getElementById('sinal-gerar-os').value = document.getElementById('sinal').value;
+    
+// Mostrar o formulário "Gerar OS"
+
+document.getElementById('formulario-gerar-os').classList.remove('hidden');
+document.getElementById('btnnotion').classList.add('montar-pos');
+    
+    const formContainer = document.querySelector('.form-container');
+    formContainer.classList.remove('center'); // Remover a centralização
+    formContainer.classList.add('side-by-side'); // Adicionar o layout lado a lado
+    
+
+     // Esconde a div de botões de cliente
+     const clientButtons = document.querySelector('.client-buttons');
+    if (clientButtons) {
+        clientButtons.style.display = 'none';
+    }
+    
+}
+
+function esconderBotoesCliente122() {
+    const el = document.querySelector('.client-buttons122');
+    if (el) {
+        el.style.display = 'none';
+    }
+}
+
+function mostrarBotoesCliente122() {
+    const el = document.querySelector('.client-buttons122');
+    if (el) {
+        el.style.display = 'flex'; // deve ser flex para manter o layout vertical
+    }
+}
+
+
+    // Função para adicionar procedimentos realizados ao campo de texto
+    function adicionarProcedimento() {
+        const procedimentoSelect = document.getElementById('procedimentos');
+        const procedimentoSelecionado = procedimentoSelect.options[procedimentoSelect.selectedIndex].value;
+        const procedimentosRealizados = document.getElementById('procedimentos_realizados');
+
+        // Verificar se o campo já contém algum procedimento
+        if (procedimentosRealizados.value) {
+            procedimentosRealizados.value += ', ' + procedimentoSelecionado;
+        } else {
+            procedimentosRealizados.value = procedimentoSelecionado;
+        }
+    }
+
+    // Função para preencher relato e procedimento com "Sem Internet"
+    function preencherSemInternet() {
+        document.getElementById('relato_cliente').value = "Sem internet";
+        document.getElementById('procedimentos_realizados').value = "LINK LOS NA OLT";
+    }
+
+    function preencherfalhamassiva() {
+        window.location.href = 'falhamassiva.html';
+    }
+
+    function preencheraplicativo() {
+        window.location.href = 'aplicativos.html';
+    }
+
+    function preencherverificacao() {
+        window.location.href = 'verificacao.html';
+    }
+
+    function preenchervagas () {
+        window.location.href = 'vagas.html';
+    }
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+        atualizarDataHora();
+        setInterval(atualizarDataHora, 1000);
+    });
+
+    function acessarWiki() {
+    window.open("https://www.notion.so/digitalnetms/4-Suporte-T-cnico-1b5c1c00aa1242ab93f11bedbfa3d549", "_blank");
+}
+
+    function acessarPlanos() {
+    window.open("https://www.notion.so/digitalnetms/Planos-Vigentes-e-Taxa-de-Instala-o-34626974ecae40f3b9f0038133cca5b1", "_blank"); // Insira o link correto
+}
+
+    function acessarcobertura() {
+    window.open("https://www.google.com/maps/d/u/0/viewer?mid=1SfkvfeUdyOgTgvHU0cayOnGopv4Fx90&ll=-20.499144451567847%2C-54.64938642585168&z=14", "_blank"); // Insira o link correto
+}
+
+    function acessarolts() {
+    window.open("https://olts-nine.vercel.app/", "_blank"); // Insira o link correto
+}
+
+function acessaroltcontrol() {
+    window.open("http://172.16.110.14:5000/onu/uncfg/", "_blank"); // Insira o link correto
+}
+
+function acessarbitrix() {
+    window.open("https://digitalnet.bitrix24.com.br/stream/", "_blank"); // Insira o link correto
+}
+
+function acessarintegrator() {
+    window.open("https://integrator6.digitalnetms.com.br/#/app/clientes", "_blank")
+}
+function acessarphpipam() {
+    window.open("http://phpipam.digitalnetms.com.br/phpipam/index.php?page=login", "_blank")
+}
+
+function acessarsimple() {
+    window.open("https://simple.digitalnetms.com.br/", "_blank")
+}
+
+function acessarszchat() {
+    window.open("https://digitalnet.sz.chat/", "_blank")
+}
+
+function acessarbizneo() {
+    window.open("https://digitalnet.bizneohr.com/", "_blank")
+}
+
+function acessarzabbix() {
+    window.open("http://zabbix.digitalnetms.com.br:3000/login", "_blank")
+}
+
+function acessoscript() {
+    window.open("https://www.notion.so/ROTEIRO-GERAL-DE-ATENDIMENTO-2-0-a36a5bc241ea4340b2c4c7fff21f6148", "_blank")
+    }
+
+function acessossenha() {
+window.open("https://docs.google.com/spreadsheets/d/1yrwQCDe_kt8I-iMK7ORplYDAaMhoP3QHz1XhlBH4Kdo/edit?gid=1090311832#gid=1090311832", "_blank")
+}
+
+function acessosaprovisionamento() {
+window.open("https://docs.google.com/presentation/d/1GsU2PPVmnVRXz4dVotNFxjxlG6PEMsA97hVXduerOe4/edit#slide=id.g1f56116a201_1_33", "_blank")
+}
+
+function acessardigistatus() {
+window.open("http://172.16.110.14:8000/", "_blank")
+}
+
+function acessarnomeclaturas() {
+window.open("https://docs.google.com/spreadsheets/d/1mD7OTkXI4JOwe2A9Ncre-yAx4UUdKjMAopImf9AW2rc/edit?gid=0#gid=0", "_blank")
+}
+
+function mostrarAlerta() {
+            const agendado = document.getElementById('agendado').value;
+            const periodo = document.getElementById('periodo').options[document.getElementById('periodo').selectedIndex].text || "N/A";
+
+            if (agendado && periodo !== "N/A") {
+                const dataFormatada = formatarData(agendado);
+                alert(`Tenho agendamento para dia ${dataFormatada} no período da ${periodo}. Consegue receber o técnico nesse período? `);
+            } else {
+                alert("Por favor, selecione uma data e um período.");
+            }
+        }
+
+function mostrarAlerta1() {
+            
+    alert(`Sua visita foi confirmada para a data combinada, posso ajudar em algo mais? `);
+        }
+
+        function formatarData(data) {
+    if (!data) return "N/A"; // Verifica se a data está vazia
+    const partes = data.split('-');
+    if (partes.length !== 3) return data; // Retorna a data original se o formato estiver incorreto
+    return `${partes[2]}/${partes[1]}/${partes[0]}`;
+}
+
+function adicionarProblemas() {
+    var selectProblemas = document.getElementById("procedimentos1").value;
+    var relatoCliente = document.getElementById("relato_cliente");
+    var procedimentosRealizados = document.getElementById("procedimentos_realizados");
+
+    if (selectProblemas === "Sem internet") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente relatou que está sem internet.";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "LINK LOS na OLT";
+    }
+
+    if (selectProblemas === "Sinal Alto na ONU") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Sem internet";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "Sinal Alto na ONU";
+    }
+
+    if (selectProblemas === "Troca de senha") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente solicitou troca de senha";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "Troca de senha alterada para:";
+    }
+
+    if (selectProblemas === "Troca de nome de rede") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente solicitou troca de nome de rede";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "Troca de nome alterada para:";
+    }
+
+    if (selectProblemas === "Troca de nome de rede e senha") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente solicitou troca de nome de rede e senha";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "Troca de nome alterada para: Troca de senha alterada para:";
+    }
+
+    if (selectProblemas === "Repetidor de sinal") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "SERVIÇO ADICIONAL - REPETIDOR DE SINAL - ";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "Cliente precisa de um repetidor de sinal ";
+    }
+
+    if (selectProblemas === "Internet LentaCTVW") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente com internet Lenta Celular/TV no WIFI";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "";
+    }
+
+    if (selectProblemas === "Internet LentaCW") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente com Internet Lenta Celular no WIFI";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "";
+    }
+
+    if (selectProblemas === "Internet LentaCTVCW") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente com Internet Lenta Celular/TV/Computadores no WIFI";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "";
+    }
+
+    if (selectProblemas === "Internet LentaCTVwC") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente com Internet Lenta Celular/TV no WIFI e CABO";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "";
+    }
+
+    if (selectProblemas === "Internet LentaCTVCWC") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente com Internet Lenta Celular/TV/Computadores no WIFI e CABO";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "";
+    }
+
+    if (selectProblemas === "Internet LentaCC") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente com Internet Lenta Celular / Computadores no WIFI";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "";
+    }
+
+    if (selectProblemas === "Internet Lentatvbox") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente com Internet Lenta na TVBOX";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "";
+    }
+
+    if (selectProblemas === "Internet Lentatodos") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente com Internet Lenta em todos os dispositivos - Cliente respondeu no geral";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "";
+    }
+
+    if (selectProblemas === "Internet Lentajogos") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente com Internet Lenta para jogar, cliente ficando com o PING/MS alto";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "";
+    }
+
+    if (selectProblemas === "Internet LentaPlanoreduzido") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente com Internet Lenta, está com plano reduzido";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "";
+    }
+
+    if (selectProblemas === "Internet Lentaskygato") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente com Internet Lenta, na sua SkyGato";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "";
+    }
+
+    if (selectProblemas === "Internet LentaTVW") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente com Internet Lenta na sua Televisão via WIFI";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "";
+    }
+
+    if (selectProblemas === "Internet LentaTVC") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente com Internet Lenta na sua Televisão via CABO";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "";
+    }
+
+    if (selectProblemas === "Internet LentaPlanoreduzidoapenasliberacao") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Plano reduzido";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "Plano reduzido já consta baixa, apenas liberação da conexão total";
+    }
+
+    if (selectProblemas === "mudancadecomodo") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Mudança de cômodo em uma 1x";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "Mudança de cômodo em uma 1x";
+    }
+
+    if (selectProblemas === "mudancadecomodo5x") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Mudança de cômodo em 5x";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "Mudança de cômodo em 5x parcelado na sua fatura.";
+    }
+
+    if (selectProblemas === "mudancadecomodo10X") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Mudança de cômodo em 10x";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "Mudança de cômodo em 10x parcelado na sua fatura.";
+    }
+    
+    if (selectProblemas === "esqueceusenha") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente esqueceu a senha";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "Sua senha atual é : ";
+    }
+
+    if (selectProblemas === "repetidordesinal") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente solicita um repetidor de sinal DIGIMESH";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "Cliente aceitou o repetidor de sinal DIGIMESH por R$12,90 com beneficio de 30 dias de degustação.";
+    }
+
+    if (selectProblemas === "repetidordesinalcabeado") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente solicita um repetidor de sinal DIGIMESH CABEADO";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "Cliente aceitou o repetidor de sinal DIGIMESH CABEADO por R$29,90.";
+    }
+
+    if (selectProblemas === "instalaçãodecabo1x") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente precisa cabear seus equipamentos na residência.";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "Cliente aceitou a instalação de cabo pelo valor de R$100,00 em 1X";
+    }
+
+    if (selectProblemas === "instalaçãodecabo10x") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente precisa cabear seus equipamentos na residência.";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "Cliente aceitou a instalação de cabo pelo valor de R$100,00 em 10X";
+    }
+
+    if (selectProblemas === "roteadorresetado") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente está sem internet";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "Cliente está com o roteador resetado.";
+    }
+
+    if (selectProblemas === "Internet LentaIPTV") {
+        // Adiciona texto no campo 'Relato do Cliente'
+        relatoCliente.value = "Cliente está com lentidão na sua televisão com o aplicativo IPTV";
+
+        // Adiciona texto no campo 'Procedimentos Realizados'
+        procedimentosRealizados.value = "";
+    }
+
+    
+}
+
+function toggleMenu() {
+    var menu = document.getElementById("menuEscondido");
+    var overlay = document.getElementById("overlay");
+    menu.classList.toggle("aberto");
+    overlay.classList.toggle("ativo");
+}
+
+// Função para fechar o menu se clicar fora dele
+document.addEventListener('click', function(event) {
+    var menu = document.getElementById("menuEscondido");
+    var overlay = document.getElementById("overlay");
+
+    // Verifica se o menu está aberto
+    if (menu.classList.contains("aberto")) {
+        // Verifica se o clique foi fora do menu
+        if (!menu.contains(event.target) && !event.target.closest('.menu-hamburguer')) {
+            menu.classList.remove("aberto");
+            overlay.classList.remove("ativo");
+        }
+    }
+});
+
+function solicitacaodeencaixe() {
+    document.getElementById('modalEncaixe').style.display = 'block';
+}
+
+function fecharModal() {
+    document.getElementById('modalEncaixe').style.display = 'none';
+    document.getElementById('modal').classList.remove('active');
+    mostrarBotoesCliente();
+}
+
+    // Função para copiar os dados de falha massiva
+    function copiarDadosFalhaMassiva5() {
+        const Nome =document.getElementById("nomeos").value || "Nenhum plano informado ou descrito";
+        const planoInput1 = document.getElementById('planoInput').value || "Nenhum plano informado ou descrito";
+        const motivo1 = document.getElementById('motivo').value || "Sem motivo informado";
+        const Agendado = document.getElementById('agendado1').value || "Nenhuma data de agendamento atual selecionado";
+        const Periodo1 = document.getElementById('periodo1').value || "Nenhum periodo selecionado";
+        const Agendado2 = document.getElementById('agendado2').value || "Nenhuma data de interesse selecionada";
+        const Periodo2 = document.getElementById('periodo2').value || "Nenhuma data de interesse selecionada";
+        const Obs1 = document.getElementById('Obs').value || "Nenhuma observação a acrescentar";
+        
+        const texto = 
+`=============== ENCAIXE =================
+Nome: ${Nome}
+Plano: ${planoInput1}
+==========================================
+Motivo: ${motivo1}
+Data do Agendamento Atual: ${Agendado} ${Periodo1}
+Data do Interesse do Agendamento: ${Agendado2} ${Periodo2}
+=========================================
+Obs: ${Obs1}
+=========================================`;
+
+        navigator.clipboard.writeText(texto).then(() => {
+            mostrarNotificacao('Dados copiados para a área de transferência!');
+        }).catch(err => {
+            console.error('Falha ao copiar!', err);
+        });
+    }
+
+    function preenchervoltar() {
+        window.location.href = 'Mascara 2.0.html';
+    }
+
+    function preenchervagas() {
+        window.location.href = 'vagas.html';
+    }
+
+    function outrosformularios() {
+        window.location.href = 'outrosformularios.html';
+    }
+
+    function adicionarConfirmacao() {
+    const select = document.getElementById('confirmacao');
+    const textarea = document.getElementById('resultado');
+    const selectedValue = select.value;
+
+    if (selectedValue) {
+        textarea.value = selectedValue; // Adiciona a seleção ao textarea
+    }
+}
+
+function toggleDropdown() {
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    dropdownMenu.style.display = dropdownMenu.style.display === 'block' ? 'none' : 'block';
+}
+
+function selecionarPlano(plano) {
+    const input = document.getElementById('planoInput');
+    input.value = plano;
+    toggleDropdown(); // Fecha o menu após a seleção
+}
+
+function abrirModal() {
+    // Código para abrir o modal aqui
+    // ...
+    document.getElementById('modal').classList.add('active');
+    esconderBotoesCliente();
+
+    // Fecha o menu suspenso ao abrir o modal
+    fecharDropdownMenu();
+}
+
+function fecharDropdownMenu() {
+    document.getElementById('dropdownMenu').style.display = 'none';
+}
+
+function toggleDropdown() {
+    const dropdownMenu = document.getElementById("dropdownMenu");
+    dropdownMenu.style.display = dropdownMenu.style.display === "none" ? "block" : "none";
+}
+
+function selecionarPlano(plano) {
+    document.getElementById("planoInput").value = plano;
+    toggleDropdown(); // Esconde o dropdown após a seleção
+}
+
+window.onload = function () {
+        let botaoMenu = document.getElementById('toggle-menu');
+        let menu = document.getElementById('menu-opcoes');
+        let inputSenha = document.getElementById('senha');
+
+        if (botaoMenu && menu && inputSenha) {
+            botaoMenu.addEventListener('click', function (event) {
+                event.stopPropagation();
+                menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+            });
+
+            document.addEventListener('click', function (event) {
+                if (!menu.contains(event.target) && event.target !== botaoMenu) {
+                    menu.style.display = 'none';
+                }
+            });
+        }
+    };
+
+    function selecionarSenha(valor) {
+        document.getElementById('senha').value = valor;
+        document.getElementById('menu-opcoes').style.display = 'none';
+    }
+
+    function verificaroutrassenhas(valor) {
+        window.open("https://docs.google.com/spreadsheets/d/1yrwQCDe_kt8I-iMK7ORplYDAaMhoP3QHz1XhlBH4Kdo/edit?gid=1090311832#gid=1090311832")
+    }
+
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+    let popup = null; // Variável para armazenar a referência à janela pop-up
+
+    document.getElementById('openPopup').addEventListener('click', function() {
+        // Verificar se a janela pop-up já existe
+        if (popup === null || popup.closed) {
+            // Abrir a janela pop-up
+            popup = window.open('http://172.16.110.14:8000/', 'popup', 'width=800,height=600');
+
+            // Verificar se a janela pop-up foi aberta com sucesso
+            if (popup) {
+                // Adicionar um listener para quando a janela pop-up é fechada
+                popup.addEventListener('beforeunload', function() {
+                    popup = null; // Limpar a referência quando a janela é fechada
+                });
+            } else {
+                alert('Pop-up bloqueado! Por favor, permita pop-ups para este site.');
+            }
+        } else {
+            // Se a janela já existe, trazer para o foco
+            popup.focus();
+        }
+    });
+});
+
+function scriptInternetLenta() {
+    const messages = [
+        "<b>OBRIGATÓRIO:</b>",
+        "Vamos identificar o que está causando a dificuldade na conexão",
+        " ",
+        "<b>SOLUÇÃO - PROBLEMAS COM SERVIDORES/TVBOX</b>",
+        "Tudo indica que se trata de um problema momentâneo com o servidor do (a)",
+        " ",
+        "<b>1. Verificar se é um site ou aplicativo específico</b>",
+        "Você tem notado lentidão e quedas em algum site ou aplicativo? Em qual seria?",
+        "A lentidão ocorre somente no XXX ou em algum outro site ou aplicativo?",
+        " ",
+        "<b>2. Verificar em qual equipamento está o problema<b>",
+        "Em qual dispositivo percebeu a lentidão?",
+        "Você já testou em outro dispositivo para ver se o mesmo problema acontece?",
+        "Você tem outro dispositivo para testar se o mesmo problema acontece?",
+        "Em qual dispositivo percebeu a queda?",
+        "Como o senhor já testou em vários equipamentos, vou acessar seu roteador e verificar o que pode estar ocorrendo.",
+        " ",
+        "<b>3. Verificar como está conectado</b>",		
+        "O dispositivo está conectado por Wi-Fi ou por cabo?",
+        "Os dispositivos estão conectados por Wi-Fi ou por cabo?",
+        "Pode me falar o nome da rede wifi em que está conectado",
+        "Obrigado pelas informações, vou acessar seu roteador e verificar o que pode estar ocorrendo",
+        " ",
+        "<b>SOLUÇÃO - LENTIDÃO E AJUSTES DE CONFIGURAÇÕES</b>",
+        "Obrigado por aguardar, alterei o canal da rede wi-fi para diminuir interferências, poderia verificar se consegue navegar agora?",
+        "Obrigado por aguardar, aqui a sua conexão já está ativa, poderia verificar se consegue conectar agora?",
+        "Obrigado por aguardar, aqui a sua conexão já está ativa, poderia verificar se consegue conectar agora?  verifica se consegue navegar normalmente ?",
+        "Obrigado por aguardar, já finalizei o procedimento, realizei “XXXXXX”, poderia verificar se está funcionando corretamente por gentileza?",
+        "Considerando a reincidência no problema de lentidão, vamos agendar uma visita técnica para verificação no local…",
+        " ",
+        "<b>- Outras opções</b>",
+        "Para resolver essa questão da distância do Wi-Fi, o ideal seria instalar um repetidor de sinal….",
+        "Para uma melhor distribuição do sinal Wi-Fi,  o ideal seria instalar um repetidor de sinal….",
+        "Acessando o seu computador percebi que ele está topando processamento….", 
+        " ",
+        "<b>PRONTA FINALIZAÇÃO</b>",
+        "Posso te ajudar em algo mais ?",
+        " ",
+        "<b>FINALIZAÇÃO</b>",
+        "A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima tarde.",
+        "A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima noite.",
+    ];
+
+    displayMessages(messages);
+}
+
+    // Função para mostrar roteiro de atendimento para Sem Internet
+    function scriptSemInternet() {
+        const messages = [
+    
+   "<b>OBRIGATÓRIO:</b>", 
+    "Vamos identificar o que está causando a falta de internet",
+ "Vou solicitar que o supervisor do técnico acompanhe a vistoria….",   
+ " ",
+ "<b>Confirmei se os equipamentos estão ligados e solicite fotos dos equipamentos caso ainda não tenham sido enviadas</b>",
+  "Pode me enviar uma foto ou vídeo dos equipamentos",
+  "Pode verificar como estão as luzes do equipamento",
+ "Pode verificar se a fonte está bem encaixada e firme na tomada",
+ "Pode verificar o botão de ligar do equipamento…",
+ "Verifique por gentileza se a fibra está bem conectada no equipamento, a fibra é o fio preto com a ponta verde quadrada",
+ "Pode confirmar se os equipamentos estão ligados",
+ " ",
+"<b>ONU normal, pppoe Off</b>",
+   "Identifiquei que a ONU está conectada",
+"Verifiquei que tem sinal na fibra, mas sua internet está desconectada, a sua rede wifi está aparecendo?",
+        "Verifique se o cabo que sai do equipamento menor e conecta no equipamento maior está na porta WAN do equipamento maior",
+        "Aparentemente está tudo certo com os equipamentos, aguarde um instante enquanto verifico as configurações no sistema",
+        " ",
+        "<b>ONU com LOS ou equipamentos não ligarem</b>",
+        "Identifiquei que a ONU está desconectada ",
+        "Identifiquei que o conversor da fibra está desconectado",     
+        "Esse alarme piscando no equipamento menor indica um problema com a fibra",
+       "Aparentemente o equipamento está queimado",
+       " ",
+   "<b>SOLUÇÃO - AGENDAR VISITA</b>",
+ "Verifiquei aqui no seu sinal, que se trata de um rompimento de fibra.",
+"Vamos agendar uma visita para padronizar a instalação",
+"Esse alarme piscando no equipamento menor indica um problema com a fibra ",
+"Precisaremos agendar uma visita técnica para verificar no local",
+"Combinado, agora para finalizar o agendamento, confirme por gentileza se tem outro número para recado que gostaria de adicionar ao cadastro? pois o técnico vai ligar avisando assim que estiver chegando no local.",
+" ",        
+"Por se tratar de um problema físico, será necessário enviar uma equipe técnica ao local para fazer o reparo. Por gentileza, poderia me confirmar seu endereço para verificarmos disponibilidade de vagas.",
+ "Aguarde um instante enquanto verifico a disponibilidade das vagas",
+ " ",       
+ "<b>CONFIRMAÇÃO DE ENDEREÇO</b>",
+        "Me confirma seu endereço", 
+        "Seu endereço atual é ",
+        "Seu endereço ainda é", 
+        "Nosso agendamento estão disputado e pode ser que possa acabar o horario informado.",
+        "Não teria mais agendamento, eu posso realizar uma solicitação de encaixe para caso se disponibilize uma vaga ela será direcionada pra você, pode ser ?",
+        "Temos varias cliente com a mesma situação, devido a chuvas, furtos e manutenções de fibra por queda de poste.",
+       " ",
+        "<b>PRONTA FINALIZAÇÃO</b>",
+"Sua visita foi confirmada para a data combinada, posso ajudar em algo mais?",
+"Sua visita foi confirmada para a data combinada e a solicitação de encaixe criada, caso surja a vaga iremos entrar em contato para adiantar nesse caso, posso ajudar em algo mais?",
+        "Após a visita técnica, você pode entrar em contato com o nosso setor financeiro e solicitar o abono das horas que ficou sem internet, tá bom ?",
+" ",
+"<b>SOLUÇÃO - SEM VISITA</b>",
+"Obrigado por aguardar, aqui a sua conexão já está ativa, poderia verificar se consegue conectar agora?",
+"Através dos testes realizados identificamos que a conexão está funcionando corretamente, o problema está relacionado à/ao….",
+    " ",
+"<b>PRONTA FINALIZAÇÃO</b>",     
+ "Posso te ajudar em algo mais ?",
+ " ",    
+    "<b>FINALIZAÇÃO</b>", 
+   "A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima tarde.",
+    " A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima noite.",
+
+        ];
+
+        displayMessages(messages);
+    }
+
+        // Função para mostrar roteiro de atendimento para Sem Internet
+        function scripttrocadesenha() {
+        const messages = [
+
+        "<b>OBRIGATÓRIO:</b>",
+        "Vou fazer algumas verificações para atender a sua solicitação.",
+
+" ",
+"Preciso que você confirme o CPF do titular, e data de nascimento, por motivos de segurança por favor",
+
+"Obrigado pela confirmação.",
+" ",
+"<b>1. Sondagem</b>",
+    "<b>- Senha</b>",
+       " Aguarde enquanto confirmo a sua senha",
+       " Por gentileza, me informe qual a nova senha que deseja",
+        "Qual seria a nova senha",
+        " ",
+    "<b>- Nome da rede</b>",
+        "Aguarde enquanto confirmo o nome da sua rede",
+       " Por gentileza, me informe qual o novo nome que deseja",
+        "Qual seria o novo nome da rede",
+    "Aguarde enquanto confirmo a quantidade de dispositivos conectados",
+" ",
+"<b>1. SOLUÇÃO - NOME / SENHA DO WIFI</b>",
+     "<b>Senha</b>",
+        "Obrigado por aguardar, a senha foi alterada, poderia verificar se consegue conectar por gentileza?",
+        "Sua senha atual é",
+        " ",
+    "<b>- Nome da rede</b>",
+        "Obrigado por aguardar, o nome da sua rede foi alterado, poderia verificar se consegue conectar por gentileza?",
+        "O nome da sua rede é",
+        "Nesse momento tem XXX dispositivos conectados ao seu roteador",
+        " ",
+    "<b>PRONTA FINALIZAÇÃO</b>",
+        
+ "Posso te ajudar em algo mais ?",
+        
+" ",
+        
+    "<b>FINALIZAÇÃO</b>",
+        
+   "A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima tarde.",
+    " A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima noite.",
+ 
+        ];
+
+        displayMessages(messages);
+    }
+
+
+        // Função para mostrar roteiro de atendimento para Sem Internet
+        function scriptverificacao() {
+        const messages = [
+"<b>SONDAGEM - VERIFICAR AGENDAMENTOS</b>",
+" ",
+        "<b>OBRIGATÓRIO:</b>",
+        "Vou fazer algumas verificações para atender a sua solicitação.",
+        " ",
+"<b>1. Sondagem</b>",
+    "Vou verificar seu agendamento, só um momento por gentileza",
+    "Aguarde um instante por gentileza enquanto confirmo o seu agendamento",
+    "Vou verificar a possibilidade de encaixe…",
+    "Aguarde um instante enquanto verifico a disponibilidade das vagas",
+    "Identifiquei que já existe uma visita técnica agendada para",
+    "Vou verificar a possibilidade de encaixe…",
+    "O nível do sinal da fibra está fora dos padrões adotados pela empresa",
+    "Identifiquei diversas quedas de conexão",
+    " ",
+    "<b>Fiação solta ou caída</b>",
+    "A fiação está solta dentro ou fora da sua residência?",
+    "A fiação está baixa, dentro ou fora da sua residência?",  
+    "Aguarde um instante por gentileza enquanto adiciono a informação na Ordem de Serviço",
+    "Aguarde um instante por gentileza enquanto informo a equipe técnica sobre essa observação",
+" ",
+    "<b>SOLUÇÃO - VERIFICAR AGENDAMENTOS</b>",
+"Sua visita foi reagendada",
+"Sua visita foi agendada para data combinada, posso te ajudar em algo mais ?",
+"Atendendo a sua solicitação, a visita foi cancelada",
+"Como a visita já está agendada, basta aguardar o técnico",
+"Adicionei a informação ao atendimento, basta aguardar o técnico agora, ok?",
+"Vamos agendar uma visita para padronizar a instalação",
+"No momento o técnico está finalizando um serviço….",
+"No momento o técnico está em deslocamento…",
+" ",
+    "<b>PRONTA FINALIZAÇÃO</b>",
+    "Posso te ajudar em algo mais ?",
+    " ",
+    "<b>FINALIZAÇÃO</b>",  
+   "A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima tarde.",
+    " A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima noite.",
+ 
+        ];
+
+        displayMessages(messages);
+    }
+
+           // Função para mostrar roteiro de atendimento para Sem Internet
+           function scriptaplicativo() {
+        const messages = [
+
+        "<b>SONDAGEM - APLICATIVOS</b>",
+"Vou fazer algumas verificações para atender a sua solicitação.",
+" ",
+   "<b>1. Sondagem</b>",
+        "Qual aplicativo deseja ativar?",
+        "Aguarde enquanto eu realizo a ativação do aplicativo",
+        " ",
+        "<b>Reativação</b>",
+            "Aguarde enquanto eu realizo a reativação do aplicativo",
+            "Vou analisar o motivo do aplicativo não estar mais premium",
+        "O login e a senha do seu aplicativo são informações sensíveis",
+        " ",
+    "<b>SOLUÇÃO - CONFIGURAÇÃO DE SERVIÇOS ADICIONAIS</b>",
+    "Finalizamos a ativação do app, poderia testar e me informar se está funcionando corretamente?",
+    "Pronto, finalizamos a ativação do app, poderia testar e me informar se está funcionando corretamente?",
+    "Realizei a ativação do aplicativo",
+    "Finalizamos a ativação do aplicativo, conseguiu acessar?",
+    " ",
+    "<b>Outras opções</b>",
+    "Pronto, poderia testar o acesso ao aplicativo Digitalnet e me informar se deu certo?",
+        "O acesso ao aplicativo é feito",
+        "Não temos acesso às informações de segurança (cadastradas pelo cliente no primeiro acesso)",
+    " ",
+        "<b>PRONTA FINALIZAÇÃO</b>",
+ "Posso te ajudar em algo mais ?",
+ " ",
+    "<b>FINALIZAÇÃO</b>",
+   "A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima tarde.",
+    " A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima noite.",
+ 
+        ];
+
+        displayMessages(messages);
+    }
+
+               // Função para mostrar roteiro de atendimento para Sem Internet
+               function scriptfalha() {
+        const messages = [
+
+"<b>SONDAGEM - FALHA MASSIVA</b>",
+" ",
+"<b>Nivel 1  Até 16 Clientes</b>",
+"<b>Tarde 24 horas</b>",
+"Boa tarde, meu nome é XX. Identificamos um rompimento causado por terceiros que está afetando a sua região, nossa equipe já foi acionada para iniciar os reparos, o prazo para resolução é de 24 horas podendo ser finalizado muito antes. Pedimos que aguarde enquanto o reparo é realizado, assim que concluído sua conexão irá retornar automaticamente, não é preciso realizar nenhum procedimento com os equipamentos. Agradecemos o contato e a compreensão, caso precise novamente estaremos à disposição. Tenha uma ótima tarde.",
+
+"<b>Noite 24 horas</b>",
+"Boa noite, meu nome é XX. Identificamos um rompimento causado por terceiros que está afetando a sua região, nossa equipe já foi acionada para iniciar os reparos, o prazo para resolução é de 24 horas podendo ser finalizado muito antes. Pedimos que aguarde enquanto o reparo é realizado, assim que concluído sua conexão irá retornar automaticamente, não é preciso realizar nenhum procedimento com os equipamentos. Agradecemos o contato e a compreensão, caso precise novamente estaremos à disposição. Tenha uma ótima noite.",
+" ",
+" ",
+"<b>Nivel 2 Até 48 Clientes</b>",
+"Tarde 12 horas</b>",
+"Boa tarde, meu nome é XX. Identificamos um rompimento causado por terceiros que está afetando a sua região, nossa equipe já foi acionada para iniciar os reparos, o prazo para resolução é de 12 horas podendo ser finalizado muito antes. Pedimos que aguarde enquanto o reparo é realizado, assim que concluído sua conexão irá retornar automaticamente, não é preciso realizar nenhum procedimento com os equipamentos. Agradecemos o contato e a compreensão, caso precise novamente estaremos à disposição.",
+
+"<b>Noite 12 horas</b>",
+"Boa noite, meu nome é XX. Identificamos um rompimento causado por terceiros que está afetando a sua região, nossa equipe já foi acionada para iniciar os reparos, o prazo para resolução é de 12 horas podendo ser finalizado muito antes. Pedimos que aguarde enquanto o reparo é realizado, assim que concluído sua conexão irá retornar automaticamente, não é preciso realizar nenhum procedimento com os equipamentos. Agradecemos o contato e a compreensão, caso precise novamente estaremos à disposição.",
+" ",
+" ",
+"<b>Nivel 3 Até + que 48 Clientes</b>",
+"<b>Tarde 5 horas</b>",
+"Boa tarde, meu nome é XX. Identificamos um rompimento causado por terceiros que está afetando a sua região, nossa equipe já foi acionada para iniciar os reparos, o prazo para resolução é de 5 horas podendo ser finalizado muito antes. Pedimos que aguarde enquanto o reparo é realizado, assim que concluído sua conexão irá retornar automaticamente, não é preciso realizar nenhum procedimento com os equipamentos. Agradecemos o contato e a compreensão, caso precise novamente estaremos à disposição.",
+
+"<b>Noite 5 horas</b>",
+"Boa noite, meu nome é XX. Identificamos um rompimento causado por terceiros que está afetando a sua região, nossa equipe já foi acionada para iniciar os reparos, o prazo para resolução é de 5 horas podendo ser finalizado muito antes. Pedimos que aguarde enquanto o reparo é realizado, assim que concluído sua conexão irá retornar automaticamente, não é preciso realizar nenhum procedimento com os equipamentos. Agradecemos o contato e a compreensão, caso precise novamente estaremos à disposição.",
+" ",
+" ",
+"<b>Outras falhas</b>",
+
+"<b>(OSCILAÇÃO/QUEDA DE LINK)</b> ",
+"Identificamos uma instabilidade momentânea na sua conexão de internet.  Informamos que a nossa equipe já está ciente e verificando para que tudo seja normalizado o mais breve possível. O prazo para normalização é de até 5 horas. Agradecemos a compreensão em aguardar e se precisar, estaremos à disposição.",
+
+"<b>(INSTABILIDADE NO SITE/APP ESPECÍFICO)</b> ",
+"Identificamos uma instabilidade momentânea nos servidores do XXXX. Reiteramos que não se trata de uma instabilidade em seu provedor de internet e sim no servidor dos apps citados acima. Esperamos que tudo seja normalizado o mais breve possível. Agradecemos o contato e a compreensão, caso precise novamente estaremos à disposição.",
+
+"<b>(SEM LICENÇA WATCH TV)</b> " ,
+"Identificamos uma instabilidade momentânea atualmente na plataforma da Watch TV. Por isso, não podemos dar andamento à ativação do Paramount no seu plano neste momento. Fique tranquilo(a), pois seu atendimento continuará em aberto conosco. Assim que tudo for normalizado, entraremos em contato para prosseguir com a ativação, tudo bem?",
+
+"<b>(ENERGISA)</b> ",
+"Identificamos que a Energisa está na região realizando uma manutenção a qual está danificando a nossa rede, por isso você está sem conexão no momento. Assim que tivermos a informação que essa manutenção foi finalizada, vamos iniciar os reparos em nossa rede. Fique tranquilo(a) que o seu atendimento ficará em aberto aqui com a gente e seguiremos acompanhando a sua conexão. Esperamos que seja tudo resolvido o mais breve possível e agradecemos a compreensão.",
+
+"<b>(INCÊNDIO)</b> ",
+"Identificamos um rompimento de fibra causado por terceiros devido a um incêndio em uma área de mata na sua região. Os bombeiros estão no local combatendo o fogo para que possamos iniciar os reparos no cabeamento. O prazo estimado para a resolução é de até 8 horas. Desde já, agradecemos a sua compreensão e estamos a disposição.",
+
+"<b>(MANUTENÇÃO)</b> " ,
+"Está sendo realizada uma manutenção para melhoria em nossos equipamentos, que está afetando a sua região, o prazo para resolução é de 2 horas podendo ser finalizado muito antes. Pedimos que aguarde enquanto o reparo é realizado, assim que concluído sua conexão irá retornar automaticamente, não é preciso realizar nenhum procedimento com os equipamentos." ,
+
+"Agradecemos o contato e a compreensão, caso precise novamente estaremos à disposição.",
+
+"<b>(MANUTENÇÃO)</b>" ,
+"Vamos realizar uma manutenção para melhoria em nossos equipamentos, que está afetando a sua região, será feita essa madrugada, Pedimos que aguarde enquanto o reparo é realizado, assim que concluído sua conexão irá retornar automaticamente, não é preciso realizar nenhum procedimento com os equipamentos.",
+
+"Agradecemos o contato e a compreensão, caso precise novamente estaremos à disposição.",
+
+"Apenas até realizarem a manutenção, mas pode ficar tranquila que seu atendimento irá ficar em aberto com a gente para acompanharmos sua conexão.",
+
+" ",
+    "<b>PRONTA FINALIZAÇÃO</b>",
+ "Posso te ajudar em algo mais ?",
+ " ",
+    "<b>FINALIZAÇÃO</b>",
+   "A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima tarde.",
+    " A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima noite.",
+ 
+        ];
+
+        displayMessages(messages);
+    }
+
+               // Função para mostrar roteiro de atendimento para Sem Internet
+               function scriptfatura() {
+        const messages = [
+        "<b>SONDAGEM - FATURAS</b>",
+"<b>Vou fazer algumas verificações para atender a sua solicitação.</b>",
+" ",
+   "<b> 1. Sondagem</b>",
+"Identifiquei que a velocidade está reduzida devido a uma fatura em aberto…",
+"Aguarde enquanto restabeleço sua conexão",
+"Aguarde enquanto normalizo sua conexão",
+"Aguarde enquanto confiro as faturas abertas",
+" ",
+"<b>SOLUÇÃO - FATURAS</b>",
+"Enviei/encaminhei/segue/aqui está o boleto/pix para pagamento",
+"Enviei o boleto para pagamento via e-mail",
+"Gostaria que eu enviasse o pix para pagamento?",
+" ",
+"Restabeleci a sua velocidade, consegue verificar se está funcionando corretamente?",
+"Aqui a sua conexão já está ativa, poderia verificar se consegue conectar agora?",
+" ",
+"Conforme solicitado, segue o link para o portal PIX. Para fazer login, use seu CPF. Sua senha será composta pelos cinco primeiros dígitos do seu CPF, seguido pelo último dígito, totalizando seis dígitos. https://sac.digitalnetms.com.br/login",
+"Para atender à sua solicitação, siga estes passos: Acesse o link acima. Clique na fatura em aberto. Selecione a opção PIX e depois Copiar PIX Copia e Cola. Abra seu aplicativo bancário e realize o pagamento. https://aceite.digitalnetms.com.br/soucliente/logar",
+" ",
+    "<b>PRONTA FINALIZAÇÃO</b>",
+ "Posso te ajudar em algo mais ?",
+ " ",
+    "<b>FINALIZAÇÃO</b>",
+   "A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima tarde.",
+    " A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima noite.",
+ 
+        ];
+
+        displayMessages(messages);
+    }
+
+    function scriptredirecionamento() {
+        const messages = [
+        "<b>SONDAGEM - REDIRECIONAMENTO / IP PUBLICO / ABERTURA DE PORTAS </b>",
+"<b>Vou fazer algumas verificações para atender a sua solicitação.</b>",
+" ",
+    
+    "1. Sondagem",
+    "Para qual IP deseja fazer o redirecionamento/direcionamento?",
+    "Aguarde um instante enquanto realizo a abertura de portas",
+    "Qual porta deseja usar?",
+    "Aguarde enquanto realizo o redirecionamento/direcionamento",
+    "Para funcionar corretamente será necessário configurar um IP Público exclusivo para sua conexão",
+    "Para atender estes casos específicos, temos o pacote de câmeras",
+    "Aguarde um instante enquanto realizo a ativação do/de seu IP",
+    "Aguarde um instante enquanto cadastro o MAC",
+    "Aguarde um instante enquanto ativo/habilito/aplico o DMZ",
+    
+    "SOLUÇÃO - CONFIGURAÇÃO DE SERVIÇOS ADICIONAIS",
+    
+    "Obrigado por aguardar, finalizei o redirecionamento, consegue verificar se está funcionando corretamente?",
+    "Finalizamos a ativação do seu IP, consegue verificar se está funcionando corretamente?",
+    "Finalizei o cadastro do seu IP público",
+    "Finalizei a ativação/habilitação/aplicação do DMZ",
+" ",
+    "<b>PRONTA FINALIZAÇÃO</b>",
+ "Posso te ajudar em algo mais ?",
+ " ",
+    "<b>FINALIZAÇÃO</b>",
+   "A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima tarde.",
+    " A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima noite.",
+ 
+        ];
+
+        displayMessages(messages);
+    }
+
+    function displayMessages(messages) {
+    const messageDisplay = document.getElementById("message-display");
+    messageDisplay.style.display = "block"; // Exibe o contêiner
+
+    // Limpa mensagens anteriores e adiciona o botão de fechar
+    messageDisplay.innerHTML = `<span class="close-button1" onclick="fecharmessagecontainer()">&times;</span>`;
+
+    // Exibe as mensagens
+    messages.forEach(message => {
+        const messageElement = document.createElement("p");
+        messageElement.innerHTML = message; // Permite formatações como <b>
+        messageElement.classList.add("p-copiavel1"); // Adicione a classe aqui!
+        messageElement.title = "Clique para copiar";
+        messageElement.onclick = () => copyToClipboard(messageElement.innerText);
+        messageDisplay.appendChild(messageElement);
+    });
+}
+
+
+    // Função para copiar mensagem para a área de transferência
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+         
+        });
+    }
+
+    function solicitacaonotion() {
+    document.getElementById('modalEncaixe1').style.display = 'block';
+}
+
+function fecharModal1() {
+    document.getElementById('modalEncaixe1').style.display = 'none';
+}
+
+function fecharmessagecontainer() {
+    document.getElementById("message-display").style.display = "none"; // Oculta a div inteira
+
+    // Exibe os botões à esquerda novamente
+    document.getElementById("left-buttons").style.display = "block";
+
+    // Oculta o botão de voltar
+    document.getElementById("back-button-unique").style.display = "none";
+}
+
+function copiarTexto(elemento) {
+    // Cria uma seleção de texto dentro do elemento clicado
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(elemento.textContent)
+            .then(function() {
+                // Opcional: feedback visual
+                elemento.style.background = '#dadf3f';
+                setTimeout(() => elemento.style.background = '', 300);
+            });
+    } else {
+        // Para navegadores mais antigos
+        const range = document.createRange();
+        range.selectNodeContents(elemento);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        try {
+            document.execCommand('copy');
+            // Opcional: feedback visual
+            elemento.style.background = '#dadf3f';
+            setTimeout(() => elemento.style.background = '', 300);
+        } catch (err) {}
+        window.getSelection().removeAllRanges();
+    }
+}
+
+function toggleGrupo(id) {
+    const el = document.getElementById(id);
+    // PEGA o estado atual salvo ou padrão (aberto)
+    let opened = localStorage.getItem('grupo_' + id) === 'true';
+
+    // Inverte o estado
+    opened = !opened;
+
+    // Salva o novo estado
+    localStorage.setItem('grupo_' + id, opened);
+
+    // Atualiza a visão
+    el.style.display = opened ? "" : "none";
+}
+
+// Restaura o estado ao carregar a página
+function restaurarGrupos(ids) {
+    ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const opened = localStorage.getItem('grupo_' + id);
+        el.style.display = (opened === null || opened === "true") ? "" : "none";
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+        restaurarGrupos(['grupo1', 'grupo2','grupo3','grupo4', 'grupo5']);
+    });
+
+    function montarOSEsconderBotoes() {
+  montarOS();
+  esconderBotoesCliente122();
+}
+
+function montarOSMostrarBotoes() {
+  zerarDadosGerarOS();
+  mostrarBotoesCliente122();
+}
+
+function toggleMenuDireita() {
+    var menu = document.getElementById("menuLateralDireito");
+    var overlay = document.getElementById("overlay");
+    menu.classList.toggle("aberto");
+    overlay.classList.toggle("ativo");
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('overlay').onclick = function() {
+        document.getElementById('menuLateralDireito').classList.remove("aberto");
+        document.getElementById("overlay").classList.remove("ativo");
+    };
+    // ... outros códigos que dependem de elementos existentes ...
+});
+
+// Bloco de notas (igual você já tinha)
+function abrirNotepad() {
+    document.getElementById('notepad-modal').classList.add('ativo');
+    document.getElementById('menuLateralDireito').classList.remove("aberto");
+    document.getElementById("overlay").classList.remove("ativo");
+}
+
+function fecharNotepad() {
+    document.getElementById('notepad-modal').classList.remove('ativo');
+    document.getElementById('menuLateralDireito').classList.remove("aberto");
+    document.getElementById("overlay").classList.remove("ativo");
+}
+
+function selecionarTudo() {
+    const textarea = document.getElementById('notepad-text');
+    textarea.focus();
+    textarea.select();
+}
+function copiarTudo() {
+    const textarea = document.getElementById('notepad-text');
+    textarea.select();
+    document.execCommand('copy');
+    textarea.setSelectionRange(textarea.value.length, textarea.value.length);
+    alert('Texto copiado!');
+}
+function apagarTudo() {
+    notepad.value = '';
+    localStorage.removeItem('notepad-content');
+}
+
+document.addEventListener('mousedown', function(event) {
+    // Só faz algo se o menu lateral direito estiver aberto
+    var menu = document.getElementById('menuLateralDireito');
+    var menuBtn = document.querySelector('.menu-hamburguerdireita');
+    var overlay = document.getElementById('overlay');
+    var notepadModal = document.getElementById('notepad-modal');
+    if (menu.classList.contains('aberto') && 
+        !menu.contains(event.target) &&
+        !menuBtn.contains(event.target) && 
+        (!notepadModal.classList.contains('ativo') || !notepadModal.contains(event.target))
+    ) {
+        menu.classList.remove("aberto");
+        overlay.classList.remove("ativo");
+    }
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+    // Elemento textarea
+    const notepad = document.getElementById('notepad-text');
+
+    // Carrega o conteúdo salvo ao abrir a página
+    const salvo = localStorage.getItem('notepad-content');
+    if (salvo !== null) {
+        notepad.value = salvo;
+    }
+
+    // Salva automaticamente sempre que digitar ou mudar algo
+    notepad.addEventListener('input', function() {
+        localStorage.setItem('notepad-content', notepad.value);
+    });
+
+    // Função de limpar agora também remove do localStorage
+    window.apagarTudo = function() {
+        notepad.value = '';
+        localStorage.removeItem('notepad-content');
+    }
+});
+
+window.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.getElementById('darkModeSwitch');
+    const body = document.body;
+
+    // Inicializa switch conforme preferência salva
+    if (localStorage.getItem('dark-mode') === 'enabled') {
+        body.classList.add('dark-mode');
+        toggle.checked = true;
+    }
+
+    toggle.addEventListener('change', function() {
+        body.classList.toggle('dark-mode', toggle.checked);
+        if (toggle.checked) {
+            localStorage.setItem('dark-mode', 'enabled');
+        } else {
+            localStorage.setItem('dark-mode', 'disabled');
+        }
+    });
+});
+</script>
+</head>
+<body>
+    <div class="datetime" id="datetime"></div>
+    <div class="overlay" id="overlay"></div>
+    <!-- Menu Hamburguer -->
+    <div class="menu-hamburguer" onclick="toggleMenu()">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+    </div>
+    
+    <div class="menu-hamburguerdireita" onclick="toggleMenuDireita()">
+        <div class="bar2"></div>
+        <div class="bar2"></div>
+        <div class="bar2"></div>
+    </div>
+    <label class="toggle-dark-mode">
+        <input type="checkbox" id="darkModeSwitch" />
+        <span class="slider"></span>
+      </label>
+
+    <nav id="menuLateralDireito" class="menu-slide-direita">
+        <button style="margin-top: 55px;" onclick="abrirNotepad()">📝Bloco de Notas</button>
+    </nav>
+            <!-- Modal do bloco de notas -->
+            <div id="notepad-modal">
+                <div class="modal-box">
+                  <span class="close-btn" onclick="fecharNotepad()">&times;</span>
+                  <h3>Bloco de Notas</h3>
+                  <textarea id="notepad-text" placeholder="Digite aqui..."></textarea>
+                  <div class="notepad-actions">
+                    <button onclick="selecionarTudo()">Selecionar Tudo</button>
+                    <button onclick="copiarTudo()">Copiar Tudo</button>
+                    <button onclick="apagarTudo()">Apagar Tudo</button>
+                    <button onclick="fecharNotepad()">Fechar</button>
+                  </div>
+                </div>
+              </div>
+            
+
+    <!-- Menu Escondido -->
+    <div class="menu-escondido" id="menuEscondido">
+        <div class="szchat" id="szchat">
+            <button type="button" id="button11" onclick="acessarszchat()">SZ Chat</button>
+        </div>
+        <div class="simple" id="simple">
+            <button type="button" id="button10" onclick="acessarsimple()">Simple</button>
+        </div>
+        <div class="integrator" id="integrator">
+            <button type="button" id="button8" onclick="acessarintegrator()">Integrator</button>
+        </div>
+        <div class="bitrix" id="bitrix">
+            <button type="button" id="button7" onclick="acessarbitrix()">Bitrix</button>
+        </div>
+        <div class="bizneo" id="bizneo">
+            <button type="button" id="button12" onclick="acessarbizneo()">Bizneo</button>
+        </div>
+        <div class="wiki10" id="wiki">
+            <button type="button" id="button1" onclick="acessarWiki()">Wiki</button>
+        </div>
+        <div class="support" id="support">
+            <button type="button" id="button2" onclick="acessarPlanos()">Planos</button>
+        </div>
+        <div class="porque" id="olt">
+            <button type="button" id="button4" onclick="acessarolts()">Olts e VLAN</button>
+        </div>
+        <div class="phpipam" id="phpipam">
+            <button type="button" id="button9" onclick="acessarphpipam()">PHPIPAM</button>
+        </div>
+        <div class="faq1" id="faq1">
+            <button type="button" id="button6" onclick="acessaroltcontrol()">OLT Control</button>
+        </div>
+        <div class="senha1" id="senha1">
+            <button type="button" id="button13" onclick="acessossenha()">Senhas Roteadores</button>
+        </div>
+        <div class="vlan" id="vlan">
+            <button type="button" id="button14" onclick="acessosaprovisionamento()">Como cadastrar Vlan</button>
+        </div>
+        <div class="script" id="script">
+            <button type="button" id="button5" onclick="acessoscript()">Script de Atendimento</button>
+        </div>
+        <div class="faq" id="faq">
+            <button type="button" id="button3" onclick="acessarcobertura()">Cobertura de Base</button>
+        </div>
+        <div class="digistatus id="digistatus>
+            <button type="button" id="button15" onclick="acessardigistatus()">Digistatus</button>
+        </div>
+        <div class="digistatus id="digistatus>
+            <button type="button" id="button16" onclick="acessarnomeclaturas()">Trocas de CTO's</button>
+        </div>
+    </div>
+    <div class="client-buttons">
+        <button type="buttonnotion" id="btnnotion" onclick="solicitacaonotion()">>></button>
+    </div>
+    <div>
+    <div class="client-buttons122">
+        <div class="client-slot" data-slot="1">
+            <button type="button" onclick="selecionarCliente(1)">Cliente 1</button>
+        </div>
+        <div class="client-slot" data-slot="2">
+            <button type="button" onclick="selecionarCliente(2)">Cliente 2</button>
+        </div>
+        <div class="client-slot" data-slot="3">
+            <button type="button" onclick="selecionarCliente(3)">Cliente 3</button>
+        </div>
+        <div class="client-slot" data-slot="4">
+            <button type="button" onclick="selecionarCliente(4)">Cliente 4</button>
+        </div>
+        <div class="client-slot" data-slot="5">
+            <button type="button" onclick="selecionarCliente(5)">Cliente 5</button>
+        </div>
+        <div class="grupo-botoes-especiais">
+        <button id="openPopup">Digistatus</button>
+        <button type="button" id="btnverificacao" onclick="preencherverificacao()">Verificação</button>
+        <button type="button" id="btnAplicativo" onclick="preencheraplicativo()">Aplicativo</button>
+        <button type="button" id="btnfalhamassiva" onclick="preencherfalhamassiva()">Falha Massiva</button>
+        <button type="button" id="btnvagas" onclick="outrosformularios()">Outros formularios</button>
+    </div>
+    </div>
+</div>
+    <div class="form-container">
+        <div class="container">
+            <h1>Formulário de Atendimento</h1>
+            <form id="form-atendimento">
+                <div class="form-group">
+                    <label for="procedimentos1">Adicione o problema encontrado:</label>
+                    <select id="procedimentos1" onchange="adicionarProblemas()">
+                        <option value="">Selecione...</option>
+                        <option value="Sem internet">Sem internet</option>
+                        <option value="Sinal Alto na ONU">Sinal Alto na ONU</option>
+                        <option value="roteadorresetado">Cliente com roteador resetado</option>
+                        <option value="Internet Lentatodos">Internet Lenta em todos os dipositivos </option>
+                        <option value="Internet LentaCW">Internet Lenta Celular no WIFI</option>
+                        <option value="Internet LentaCTVW">Internet Lenta Celular/TV no WIFI</option>
+                        <option value="Internet LentaCC">Internet Lenta Celular/Computadores</option>
+                        <option value="Internet LentaIPTV">Internet Lenta Televisão com o IPTV</option>
+                        <option value="Internet LentaTVW">Internet Lenta TV no WIFI</option>
+                        <option value="Internet LentaTVC">Internet Lenta TV no CABO</option>
+                        <option value="Internet Lentatvbox">Internet Lenta TV BOX </option>
+                        <option value="Internet Lentaskygato">Internet Lenta SkyGato </option>
+                        <option value="repetidordesinal">Instalação de repetidor de sinal DIGIMESH</option>
+                        <option value="repetidordesinalcabeado">Instalação de repetidor de sinal DIGIMESH CABEADO</option>
+                        <option value="mudancadecomodo">Mudança de cômodo 1x</option>
+                        <option value="mudancadecomodo5x">Mudança de cômodo 5x</option>
+                        <option value="mudancadecomodo10X">Mudança de cômodo 10x</option>
+                        <option value="instalaçãodecabo1x">Instalação de CABO DE REDE 1x</option>
+                        <option value="instalaçãodecabo10x">Instalação de CABO DE REDE 10x</option>
+                        <option value="Internet LentaPlanoreduzidoapenasliberacao">Plano reduzido já consta baixa, apenas liberação da conexão total  </option>
+                        <option value="Internet LentaPlanoreduzido">Plano reduzido </option>
+                        <option value="esqueceusenha">Esqueceu a senha </option>
+                        <option value="Troca de senha">Troca de senha</option>
+                        <option value="Troca de nome de rede">Troca de nome de rede</option>
+                        <option value="Troca de nome de rede e senha">Troca de nome de rede e senha</option>
+                        <option value="Repetidor de sinal">Repetidor de sinal</option>
+                        <option value="Internet Lentajogos">Internet Lenta para jogos - PING/MS alto </option>
+                        <!-- WIFI -->
+                        <option value="Internet LentaCTVCW">Internet Lenta Celular/TV/Computadores</option>
+                        <!-- CABO -->
+                        <option value="Internet LentaCTVwC">Internet Lenta Celular/TV no WIFI E CABO</option>
+                        <option value="Internet LentaCTVCWC">Internet Lenta Celular/TV/Computadores no WIFI E CABO</option>                     
+                        <!-- Adicione outras opções conforme necessário -->
+
+                    </select>
+                </div>
+                <div class="form-group full-width">
+                    <label for="relato_cliente">Relato do Cliente:</label>
+                    <textarea id="relato_cliente" name="relato_cliente"></textarea>
+                </div>
+                <div class="form-group full-width">
+                    <label for="procedimentos_realizados">Procedimentos Realizados:</label>
+                    <textarea id="procedimentos_realizados" name="procedimentos_realizados"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="procedimentos">Adicionar Procedimento:</label>
+                                        <select id="procedimentos" onchange="adicionarProcedimento()">
+                        <option value="">Selecione...</option>
+                        <option value="Alteração de DNS lignet 132.255.240.56 e canais de rede 2.4ghz e 5ghz e reboot">Padrão</option>
+                        <option value="Alteração de DNS AUTOMÁTICO, Canais de rede 2.4Ghz automático, Canais de rede 5ghz automático, Reboot, Equipamento Desligado">Padrão BRILHO</option>
+                        <option value="Alteração de DNS lignet 132.255.240.56">Alteração de DNS Lignet </option>
+                        <option value="Alteração de DNS IDL 186.219.219.146">Alteração de DNS IDL </option>
+                        <option value="Alteração de DNS AUTOMÁTICO">DNS AUTOMÁTICO</option>
+                        <option value="Canais de rede 2.4Ghz fixado">Canais de rede 2.4Ghz fixado </option>
+                        <option value="Canais de rede 2.4Ghz automático">Canais de rede 2.4Ghz automático </option>
+                        <option value="Canais de rede 5ghz fixado">Canais de rede 5ghz fixado</option>
+                        <option value="Canais de rede 5ghz automático">Canais de rede 5ghz automático</option>
+                        <option value="Reboot">Reboot</option>
+                        <option value="Troca de senha">Troca de senha</option>
+                        <option value="Troca de nome de Rede">Troca de nome de Rede</option>
+                        <option value="Troca de nome de Rede e Senha">Troca de nome de Rede e senha</option>
+                        <option value="Equipamento Desligado">Equipamento Desligado</option>
+                        <option value="PORTA WAN DESCONECTADA">PORTA WAN DESCONECTADA</option>
+                        <option value="Realizado aprovisionamento do cliente">Cliente dasautorizado</option>
+                        <option value="Plano reduzido já consta baixa, apenas liberação da conexão total">Plano reduzido já consta baixa, apenas liberação da conexão total</option>
+                        <option value="Plano reduzido feito desbloqueio em confiança">Plano reduzido feito desbloqueio em confiança</option>
+                        <option value="Plano reduzido NÃO pode ser feito desbloqueio em confiança">Plano reduzido NÃO pode ser feito desbloqueio em confiança</option>
+                        <!-- Adicione mais opções conforme necessário -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sinal">Sinal:</label>
+                    <input type="text" id="sinal" name="sinal">
+                </div>
+                <div class="form-group">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome">
+                </div>
+                <div class="form-group">
+                    <label for="telefone">Telefone:</label>
+                    <input type="tel" id="telefone" name="telefone">
+                </div>
+                <div class="form-group">
+                    <label for="user">Usuário:</label>
+                    <input type="text" id="user" name="user">
+                </div>
+                <div class="form-group" style="
+                flex-direction: column;
+                align-items: center;
+                gap: 5px;
+                right: 2px;
+                position: relative;
+                padding: -50px; /* Opcional para evitar excesso de espaço */
+                top: -7px;
+            ">
+<label for="senha">Senha:</label>
+
+<div style="
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+">
+    <input type="text" id="senha" name="senha" style="
+        flex-grow: 1;          
+        padding: 8px;
+        width: 250px; /* Aumenta a largura */
+        width: auto;  
+    ">
+    <button type="button" id="toggle-menu" style="
+        padding: 8px;
+        position: relative;
+        font-size: 14px;
+        cursor: pointer;
+        top: -10px;
+        margin-left: -38px;
+        left: 12px;
+    ">▼</button>
+</div>
+
+<!-- Menu suspenso -->
+<div id="menu-opcoes" style="
+    display: none;
+    position: absolute;
+    top: 90%;
+    right: 0px;
+    color: #000;
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    width: 120px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+">                        <div class="opcao" onclick="selecionarSenha('@1D_')" style="padding: 5px; cursor: pointer;">@1D_</div>
+                        <div class="opcao" onclick="selecionarSenha('@1D_digitalnet')" style="padding: 5px; cursor: pointer;">@1D_digitalnet</div>
+                        <div class="opcao" onclick="selecionarSenha('multipro')" style="padding: 5px; cursor: pointer;">multipro</div>
+                        <div class="opcao" onclick="selecionarSenha('l1gn3tAP1412')" style="padding: 5px; cursor: pointer;">l1gn3tAP1412</div>
+                        <div class="opcao" onclick="selecionarSenha('l1gn3t@P1412')" style="padding: 5px; cursor: pointer;">l1gn3t@P1412</div>
+                        <div class="opcao" onclick="selecionarSenha('!Aa21510000')" style="padding: 5px; cursor: pointer;">!Aa21510000</div>
+                        <div class="opcao" onclick="selecionarSenha('21510000')" style="padding: 5px; cursor: pointer;">21510000</div>
+                        <div class="opcao" onclick="selecionarSenha('lig10@lig10')" style="padding: 5px; cursor: pointer;">lig10@lig10</div>
+                        <div class="opcao" onclick="selecionarSenha('admintelecom')" style="padding: 5px; cursor: pointer;">admintelecom</div>
+                        <div class="opcao" onclick="verificaroutrassenhas('verificaroutrassenhas')" 
+                        style="padding: 5px; cursor: pointer; font-weight: bold;">
+                       Verificar outras senhas
+                   </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="ponto_acesso">Ponto de Acesso:</label>
+                    <input type="text" id="ponto_acesso" name="ponto_acesso">
+                </div>
+                <div class="form-group">
+                    <label for="protocolo">Protocolo:</label>
+                    <input type="text" id="protocolo" name="protocolo">
+                </div>
+                <div id="modalEncaixe1" class="modal-container1" style="display:none;">
+                    <div class="modal-backdrop">
+                    <div class="modal-content1">
+                        <span class="close-button2" onclick="fecharModal1()">&times;</span>
+                        <h1>Script de Atendimento</h1>
+                        <form id="form-falhamassiva5">
+                            <div id="left-buttons4">
+                                <p></p>
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)"> Boa tarde, meu nome é XX, com quem eu falo?</p>
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)"> Boa noite, meu nome é XX, com quem eu falo?</p>
+                                <p>
+                                    <p><b class="p-copiavel" style="color: #dadf3f;" onclick="toggleGrupo('grupo1')">Questionou no que pode ajudar?</b> </p>                            
+                                  <div id="grupo1">
+                                    <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">como posso te ajudar hoje, por gentileza?</p>
+                                    <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Em que posso ajudar, por gentileza?</p>
+                                    <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Posso te ligar? Por telefone, consigo te ajudar de forma mais rápida e eficaz!</p>
+                                  </div>
+                                <p><b class="p-copiavel" style="color: #dadf3f;" onclick="toggleGrupo('grupo2')">Caso cliente já informou o motivo do contato</b> </p>
+                                <div id="grupo2">
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Certo obrigado pelas informações, de acordo com as informações que me passou vou iniciar as verificações</p>
+                                </div>
+                                <p><b class="p-copiavel" style="color: #dadf3f;" onclick="toggleGrupo('grupo3')">Finalizações</b> </p>
+                                <div id="grupo3">
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Agradecemos o contato e a compreensão, caso precise novamente estaremos à disposição.</p>
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Conforme resolvido por telefone, irei encerrar o atendimento por aqui. Sempre que precisar, estaremos à disposição!</p>
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Agradecemos o contato e a compreensão, Iremos encerrar o atendimento por falta de comunicação, caso precise novamente estaremos à disposição.</p>
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Certo, nesse caso como se trata de uma lentidão iremos te transferir para nosso atendimento especializado em lentidão, aguarde um momento que logo você será atendindo. </p>
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima tarde.</p>
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima noite.</p>
+                                </div>
+                                <p><b class="p-copiavel" style="color: #dadf3f;" onclick="toggleGrupo('grupo4')">Transferência</b> </p>
+                                <div id="grupo4">
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Aguarde um instante, vou transferir seu atendimento para o setor responsável.</p>
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Identifiquei que o seu atendimento seria para CNPJ, nesse caso aguarde um instante, vou transferir seu atendimento para o setor responsável.</p>
+                                </div>
+                                <p><b class="p-copiavel" style="color: #dadf3f;" onclick="toggleGrupo('grupo5')">Primeira verificação</b> </p>
+                                <div id="grupo5">
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Você está perto dos equipamentos para fazer alguns testes?</p>
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Você está perto dos equipamentos para fazer alguns testes? para validar se deu certo a troca de senha ?</p>
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Você já realizou algum procedimento, como desligar o equipamento da tomada ou reiniciar seu dispositivo?</p>
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Mesmo após reiniciar o equipamento o problema persistiu</p>
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Para realizar o atendimento, é necessário estar no local para fazer os testes</p>
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Poderia me informar o contato de alguém que esteja no local?</p>
+                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Já vou entrar em contato com a pessoa no local</p>
+                                </div>
+
+
+                                <button type="button" class="button40" id="btnscriptinternetlenta" onclick="scriptInternetLenta()">Internet lenta</button>
+                                <button type="button" class="button40" id="btnscriptseminternet" onclick="scriptSemInternet()">Sem internet</button>
+                                <button type="button" class="button40" id="btnscripttrocadesenha" onclick="scripttrocadesenha()">Troca de senha</button>
+                                <button type="button" class="button40" id="btnscripttrocadesenha" onclick="scriptverificacao()">Verificação de Agendamento</button>
+                                <button type="button" class="button40" id="btnscripttrocadesenha" onclick="scriptaplicativo()">Aplicativos</button>
+                                <button type="button" class="button40" id="btnscripttrocadesenha" onclick="scriptfalha()">Falha Massiva</button>
+                                <button type="button" class="button40" id="btnscripttrocadesenha" onclick="scriptfatura()">Faturas</button>
+                                <button type="button" class="button40" id="btnscripttrocadesenha" onclick="scriptredirecionamento()">Redirecionamento/IP publico/abertura de porta </button>
+                                <button type="button" class="button40" id="btnscripttrocadesenha" onclick="scriptatualizacao()">Atualização / configuração</button>
+                                <button type="button" class="button40" id="btnscripttrocadesenha" onclick="scriptmudanca()">Mudança de cômodo</button>
+                                <button type="button" class="button40" id="btnscripttrocadesenha" onclick="scriptdivergencia()">Divergência de plano</button>
+                                <button type="button" class="button40" id="btnscripttrocadesenha" onclick="scriptelogio()">Elogios e reclmações</button>
+                                <button type="button" class="button40" id="btnscripttrocadesenha" onclick="scriptusar()">Atendimento específico</button>
+                                <button type="button" class="button40" id="btnscripttrocadesenha" onclick="scriptfalta()">Falta de comunicação</button>
+                                <button type="button" class="button40" id="btnscripttrocadesenha" onclick="scriptfinalizacao()">Finalizar Atendimento</button>
+                            </div>
+                            <div id="message-display" class="message-container" style="display: none;">
+                                <span class="close-button1" onclick="fecharmessagecontainer()">&times;</span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+                <label for="cliente-confirmou">
+                    <input type="checkbox" id="cliente-confirmou" name="cliente-confirmou">
+                    Cliente confirmou que melhorou
+                  </label>
+
+                  <label for="cliente-aguardando">
+                <div class="form-actions">
+                    <button type="button" onclick="copiarDados()">Copiar Dados</button>
+                    <button type="button" onclick="montarOSEsconderBotoes()">Montar OS</button>
+                    <button type="button" onclick="zerarDadosAtendimento()">Zerar Dados</button>
+                </div>
+                <div class="footer-note">vt</div>
+            </form>
+            <div class="notification" id="notification" style="display: none;"></div>
+        </div>
+        <div class="container hidden" id="formulario-gerar-os">
+            <h1>Gerar OS</h1>
+            <div class="link-container">
+                <div class="client-buttons">
+                    <button type="buttonnotion" id="btnnotion1" onclick="solicitacaonotion()">>></button>
+                </div>
+                <button type="button" id="btn-direcionamento" onclick="solicitacaodeencaixe()">Gerar encaixe</button>
+            </div>    
+            <form id="form-gerar-os">
+                <div class="form-group">
+                    <label for="agendado">Agendado para:</label>
+                    <input type="date" id="agendado" name="agendado">
+                </div>
+                <div class="periodo-container">
+                    <label for="periodo" class="label-periodo">
+                        Período:
+                    </label>
+                    <select id="periodo" onchange="selecionarHorario(this.value)">
+                        <option value="">Selecione o período</option>
+                        <option value="manha">Manhã (07:30 às 12:00)</option>
+                        <option value="tarde">Tarde (13:00 às 17:00)</option>
+                        <option value="noite">Noite (17:00 às 20:00)</option>
+                    </select>
+                    <button type="button" class="small-button" onclick="mostrarAlerta()">✍</button>
+                    <button type="button" class="small-button" onclick="mostrarAlerta1()">✔</button>
+                </div>
+                <div class="form-group">
+                    <label for="relato_cliente-gerar-os">Relato do Cliente:</label>
+                    <textarea id="relato_cliente-gerar-os" name="relato_cliente" rows="7"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="problema_identificado">Problema Identificado:</label>
+                    <textarea id="problema_identificado" rows="7"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="nome-gerar-os">Nome:</label>
+                    <input type="text" id="nome-gerar-os" name="nome">
+                </div>
+                <div class="form-group">
+                    <label for="telefone-gerar-os">Telefone:</label>
+                    <input type="tel" id="telefone-gerar-os" name="telefone">
+                </div>
+                <div class="form-group">
+                    <label for="user-gerar-os">Usuário:</label>
+                    <input type="text" id="user-gerar-os" name="user">
+                </div>
+                <div class="form-group">
+                    <label for="senha-gerar-os">Senha:</label>
+                    <input type="text" id="senha-gerar-os" name="senha">
+                </div>
+                <div class="form-group">
+                    <label for="ponto_acesso-gerar-os">Ponto de Acesso:</label>
+                    <input type="text" id="ponto_acesso-gerar-os" name="ponto_acesso">
+                </div>
+                <div class="form-group">
+                    <label for="sinal-gerar-os">Sinal:</label>
+                    <input type="text" id="sinal-gerar-os" name="sinal">
+                </div>
+                <div class="form-group">
+                    <label for="protocolo-gerar-os">Protocolo:</label>
+                    <input type="text" id="protocolo-gerar-os" name="protocolo">
+                </div>
+                <div class="form-group">
+                    <label for="geolocalizacao">Geolocalização:</label>
+                    <input type="text" id="geolocalizacao" name="geolocalizacao">
+                </div>
+                <div class="form-actions">
+                    <button type="button" onclick="copiarDadosGerarOS()">Copiar Dados</button>
+                    <button type="button" onclick="montarOSMostrarBotoes()">Zerar Dados</button>
+                </div>
+                <div id="modalEncaixe" class="modal-container" style="display:none;">
+                    <!-- Conteúdo do Modal -->
+                    <div class="modal-content">
+                        <span class="close-button" onclick="fecharModal()">&times;</span>
+                        <h1>Solicitação de encaixe</h1>
+                        <form id="form-falhamassiva5">
+                            <div class="form-groupteste">
+                                <div class="form-group">
+                                    <label for="nomeos">Cliente</label>
+                                    <input type="text" id="nomeos" name="nomeos" rows="1">
+                                </div>   
+                                <label for="planoInput">Plano:</label>
+                                <div class="input-with-dropdown">
+                                    <input type="text" id="planoInput" placeholder="Digite ou selecione..." />
+                                    <button type="button" class="dropdown-button" onclick="toggleDropdown()">▼</button>
+                                    <div class="dropdown-menu" id="dropdownMenu" style="display: none;">
+                                        <div onclick="selecionarPlano('(0) Vd - Plano Digital 800')">(0) Vd - Plano Digital 800</div>
+                                        <div onclick="selecionarPlano('(0) Vd - Plano Digital 900')">(0) Vd - Plano Digital 900</div>
+                                        <div onclick="selecionarPlano('(0) Vd - Plano Digital 900 Digiflix')">(0) Vd - Plano Digital 900 Digiflix</div>
+                                        <div onclick="selecionarPlano('(0) Vd - Plano Digital 900 Casa Conectada')">(0) Vd - Plano Digital 900 Casa Conectada</div>
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="form-group">
+                                    <label for="motivo">Motivo</label>
+                                    <input type="text" id="motivo" name="motivo" rows="1">
+                                </div>               
+                                <div class="agendamento-container">
+                                    <div class="agendamento-item">
+                                        <div class="form-group">
+                                            <label for="agendado1">A Data do Agendamento Atual:</label>
+                                            <input type="date" id="agendado1" name="agendado">
+                                        </div>
+                                        <div class="periodo-container">
+                                            <label for="periodo1" class="label-periodo">
+                                                Período:
+                                            </label>
+                                            <select id="periodo1" onchange="selecionarHorario(this.value)">
+                                                <option value="">Selecione o período</option>
+                                                <option value="Qualquer Horario">Qualquer Horario</option>
+                                                <option value="Manhã (07:30 às 12:00)">Manhã (07:30 às 12:00)</option>
+                                                <option value="Tarde (13:00 às 17:00)">Tarde (13:00 às 17:00)</option>
+                                                <option value="Noite (17:00 às 20:00)">Noite (17:00 às 20:00)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="agendamento-item">
+                                        <div class="form-group">
+                                            <label for="agendado2">Data do Interesse do Agendamento:</label>
+                                            <input type="date" id="agendado2" name="agendado">
+                                        </div>
+                                        <div class="periodo-container">
+                                            <label for="periodo2" class="label-periodo">
+                                                Período:
+                                            </label>
+                                            <select id="periodo2" onchange="selecionarHorario(this.value)">
+                                                <option value="">Selecione o período</option>
+                                                <option value="Qualquer Horario">Qualquer Horario</option>
+                                                <option value="Manhã (07:30 às 12:00)">Manhã (07:30 às 12:00)</option>
+                                                <option value="Tarde (13:00 às 17:00)">Tarde (13:00 às 17:00)</option>
+                                                <option value="Noite (17:00 às 20:00)">Noite (17:00 às 20:00)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="form-group">
+                                        <label for="Obs">Obs:</label>
+                                        <textarea id="Obs" name="Obs" rows="3"></textarea>
+                                    </div>
+                            <div class="form-actions">
+                                <button type="button" onclick="copiarDadosFalhaMassiva5()">Copiar Dados</button>
+                                <button type="button" onclick="crie()">Zerar Dados</button>
+                            </div>
+            </form>
+        </div>
+    </div>
+    <div class="notification" id="notification"></div>
+</body>
+</html>
