@@ -1406,6 +1406,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
+
+    function formatarTelefone(input) {
+        // Remove tudo que nao for digito
+        var digits = input.value.replace(/\D/g, '');
+        // Remove prefixo internacional 55 se comecar com 55 e tiver mais de 11 digitos
+        if (digits.startsWith('55') && digits.length > 11) {
+            digits = digits.slice(2);
+        }
+        input.value = digits;
+    }
+
     function copiarDados() {
         const relatoCliente = document.getElementById('relato_cliente').value || "N/A";
         const procedimentosRealizados = document.getElementById('procedimentos_realizados').value || "N/A";
@@ -1429,7 +1440,7 @@ ${clienteConfirmou ? 'Cliente confirmou que melhorou: SIM' : ''}
 Usuário: ${user}
 Senha: ${Senha}
 Ponto de Acesso: ${pontoAcesso}
-Sinal: ${sinal}
+Status ONU: ${sinal}
 
 ============================================
 Nome: ${nome} Telefone: ${telefone}
@@ -1473,7 +1484,7 @@ Procedimentos Realizados: ${procedimentosRealizados}
 
 Ponto de Acesso: ${pontoAcesso}
 
-Sinal: ${sinal}
+Status ONU: ${sinal}
 
 Usuário: ${user} Senha: ${senha}
 
@@ -1774,7 +1785,37 @@ function mostrarBotoesCliente122() {
     }
 
     function preencherfalhamassiva() {
-        window.location.href = 'falhamassiva.html';
+        document.getElementById('modalFalhaMassiva').style.display = 'block';
+    }
+
+    function fecharModalFalhaMassiva() {
+        document.getElementById('modalFalhaMassiva').style.display = 'none';
+    }
+
+    function zerarFalhaMassiva() {
+        ['fm-rompimento','fm-caixas','fm-quantidade','fm-hora-informada','fm-protocolo','fm-horario-queda','fm-localizacao'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.value = '';
+        });
+        mostrarNotificacao('Formulario de falha massiva zerado!');
+    }
+
+    function copiarDadosFalhaMassivaModal() {
+        var nivel = document.getElementById('fm-rompimento').value || '';
+        var caixas = document.getElementById('fm-caixas').value || '';
+        var quantidade = document.getElementById('fm-quantidade').value || '';
+        var horaInformada = document.getElementById('fm-hora-informada').value || '';
+        var protocolo = document.getElementById('fm-protocolo').value || '';
+        var horarioQueda = document.getElementById('fm-horario-queda').value || '';
+        var localizacao = document.getElementById('fm-localizacao').value || '';
+
+        var texto = "*** FALHA MASSIVA *** \n===================================== \nRompimento: " + nivel + " \n===================================== \nCaixas: " + caixas + " \nQuantidade de Clientes: " + quantidade + " \nHora informada: " + horaInformada + " \nProtocolo: " + protocolo + " \nHorario de Queda: " + horarioQueda + "\n Localizacao da CTO: " + localizacao + " \n=====================================";
+
+        navigator.clipboard.writeText(texto).then(function() {
+            mostrarNotificacao('Dados da Falha Massiva copiados!');
+        }).catch(function(err) {
+            console.error('Falha ao copiar!', err);
+        });
     }
 
     function preencheraplicativo() {
@@ -1782,7 +1823,71 @@ function mostrarBotoesCliente122() {
     }
 
     function preencherverificacao() {
-        window.location.href = 'verificacao.html';
+        // Reset form
+        document.getElementById('ret-protocolo').value = '';
+        document.getElementById('ret-nome').value = '';
+        document.getElementById('ret-numero').value = '';
+        document.getElementById('ret-problema').value = '';
+        document.getElementById('ret-procedimento').value = '';
+        document.getElementById('ret-opcao-contato').checked = false;
+        document.getElementById('ret-opcao-semcontato').checked = false;
+        document.getElementById('ret-campos-atendimento').style.display = 'none';
+        document.getElementById('modalRetornos').style.display = 'block';
+    }
+
+    function fecharModalRetornos() {
+        document.getElementById('modalRetornos').style.display = 'none';
+    }
+
+    function toggleRetornoOpcao(opcao) {
+        var camposAtendimento = document.getElementById('ret-campos-atendimento');
+        if (opcao === 'contato') {
+            camposAtendimento.style.display = 'block';
+        } else {
+            camposAtendimento.style.display = 'none';
+        }
+    }
+
+    function zerarRetornos() {
+        ['ret-protocolo','ret-nome','ret-numero','ret-problema','ret-procedimento'].forEach(function(id) {
+            var el = document.getElementById(id);
+            if (el) el.value = '';
+        });
+        document.getElementById('ret-opcao-contato').checked = false;
+        document.getElementById('ret-opcao-semcontato').checked = false;
+        document.getElementById('ret-campos-atendimento').style.display = 'none';
+        mostrarNotificacao('Formulario de retorno zerado!');
+    }
+
+    function copiarDadosRetorno() {
+        var protocolo = document.getElementById('ret-protocolo').value || '';
+        var nome = document.getElementById('ret-nome').value || '';
+        var numero = document.getElementById('ret-numero').value || '';
+        var contatoFeito = document.getElementById('ret-opcao-contato').checked;
+        var semContato = document.getElementById('ret-opcao-semcontato').checked;
+
+        var situacao = '';
+        var extra = '';
+
+        if (contatoFeito) {
+            situacao = 'FEITO CONTATO E REALIZADO ATENDIMENTO';
+            var problema = document.getElementById('ret-problema').value || '';
+            var procedimento = document.getElementById('ret-procedimento').value || '';
+            extra = "\nProblema: " + problema + "\nProcedimento Realizado: " + procedimento;
+        } else if (semContato) {
+            situacao = 'SEM CONTATO';
+        } else {
+            mostrarNotificacao('Selecione uma opcao antes de copiar!');
+            return;
+        }
+
+        var texto = "*** RETORNO ***\n=====================================\nProtocolo: " + protocolo + "\nNome do Cliente: " + nome + "\nNumero: " + numero + "\n=====================================\nSituacao: " + situacao + extra + "\n=====================================";
+
+        navigator.clipboard.writeText(texto).then(function() {
+            mostrarNotificacao('Dados do Retorno copiados!');
+        }).catch(function(err) {
+            console.error('Falha ao copiar!', err);
+        });
     }
 
     function preenchervagas () {
@@ -3026,7 +3131,7 @@ window.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="grupo-botoes-especiais">
         <button id="openPopup">Digistatus</button>
-        <button type="button" id="btnverificacao" onclick="preencherverificacao()">Verificação</button>
+        <button type="button" id="btnverificacao" onclick="preencherverificacao()">Retornos</button>
         <button type="button" id="btnAplicativo" onclick="preencheraplicativo()">Aplicativo</button>
         <button type="button" id="btnfalhamassiva" onclick="preencherfalhamassiva()">Falha Massiva</button>
         <button type="button" id="btnvagas" onclick="outrosformularios()">Outros formularios</button>
@@ -3112,7 +3217,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="sinal">Sinal:</label>
+                    <label for="sinal">Status ONU:</label>
                     <input type="text" id="sinal" name="sinal">
                 </div>
                 <div class="form-group">
@@ -3121,7 +3226,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="form-group">
                     <label for="telefone">Telefone:</label>
-                    <input type="tel" id="telefone" name="telefone">
+                    <input type="tel" id="telefone" name="telefone" oninput="formatarTelefone(this)">
                 </div>
                 <div class="form-group">
                     <label for="user">Usuário:</label>
@@ -3207,46 +3312,6 @@ window.addEventListener('DOMContentLoaded', function() {
                         <h1>Script de Atendimento</h1>
                         <form id="form-falhamassiva5">
                             <div id="left-buttons4">
-                                <p></p>
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)"> Boa tarde, meu nome é XX, com quem eu falo?</p>
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)"> Boa noite, meu nome é XX, com quem eu falo?</p>
-                                <p>
-                                    <p><b class="p-copiavel" style="color: #dadf3f;" onclick="toggleGrupo('grupo1')">Questionou no que pode ajudar?</b> </p>                            
-                                  <div id="grupo1">
-                                    <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">como posso te ajudar hoje, por gentileza?</p>
-                                    <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Em que posso ajudar, por gentileza?</p>
-                                    <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Posso te ligar? Por telefone, consigo te ajudar de forma mais rápida e eficaz!</p>
-                                  </div>
-                                <p><b class="p-copiavel" style="color: #dadf3f;" onclick="toggleGrupo('grupo2')">Caso cliente já informou o motivo do contato</b> </p>
-                                <div id="grupo2">
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Certo obrigado pelas informações, de acordo com as informações que me passou vou iniciar as verificações</p>
-                                </div>
-                                <p><b class="p-copiavel" style="color: #dadf3f;" onclick="toggleGrupo('grupo3')">Finalizações</b> </p>
-                                <div id="grupo3">
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Agradecemos o contato e a compreensão, caso precise novamente estaremos à disposição.</p>
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Conforme resolvido por telefone, irei encerrar o atendimento por aqui. Sempre que precisar, estaremos à disposição!</p>
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Agradecemos o contato e a compreensão, Iremos encerrar o atendimento por falta de comunicação, caso precise novamente estaremos à disposição.</p>
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Certo, nesse caso como se trata de uma lentidão iremos te transferir para nosso atendimento especializado em lentidão, aguarde um momento que logo você será atendindo. </p>
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima tarde.</p>
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">A seguir terá uma pesquisa de satisfação, peço que avalie o meu atendimento, sua opinião é muito importante, tenha uma ótima noite.</p>
-                                </div>
-                                <p><b class="p-copiavel" style="color: #dadf3f;" onclick="toggleGrupo('grupo4')">Transferência</b> </p>
-                                <div id="grupo4">
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Aguarde um instante, vou transferir seu atendimento para o setor responsável.</p>
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Identifiquei que o seu atendimento seria para CNPJ, nesse caso aguarde um instante, vou transferir seu atendimento para o setor responsável.</p>
-                                </div>
-                                <p><b class="p-copiavel" style="color: #dadf3f;" onclick="toggleGrupo('grupo5')">Primeira verificação</b> </p>
-                                <div id="grupo5">
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Você está perto dos equipamentos para fazer alguns testes?</p>
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Você está perto dos equipamentos para fazer alguns testes? para validar se deu certo a troca de senha ?</p>
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Você já realizou algum procedimento, como desligar o equipamento da tomada ou reiniciar seu dispositivo?</p>
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Mesmo após reiniciar o equipamento o problema persistiu</p>
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Para realizar o atendimento, é necessário estar no local para fazer os testes</p>
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Poderia me informar o contato de alguém que esteja no local?</p>
-                                <p class="p-copiavel" style="cursor: pointer;" onclick="copiarTexto(this)">Já vou entrar em contato com a pessoa no local</p>
-                                </div>
-
-
                                 <button type="button" class="button40" id="btnscriptinternetlenta" onclick="scriptInternetLenta()">Internet lenta</button>
                                 <button type="button" class="button40" id="btnscriptseminternet" onclick="scriptSemInternet()">Sem internet</button>
                                 <button type="button" class="button40" id="btnscripttrocadesenha" onclick="scripttrocadesenha()">Troca de senha</button>
@@ -3325,7 +3390,7 @@ window.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="form-group">
                     <label for="telefone-gerar-os">Telefone:</label>
-                    <input type="tel" id="telefone-gerar-os" name="telefone">
+                    <input type="tel" id="telefone-gerar-os" name="telefone" oninput="formatarTelefone(this)">
                 </div>
                 <div class="form-group">
                     <label for="user-gerar-os">Usuário:</label>
@@ -3340,7 +3405,7 @@ window.addEventListener('DOMContentLoaded', function() {
                     <input type="text" id="ponto_acesso-gerar-os" name="ponto_acesso">
                 </div>
                 <div class="form-group">
-                    <label for="sinal-gerar-os">Sinal:</label>
+                    <label for="sinal-gerar-os">Status ONU:</label>
                     <input type="text" id="sinal-gerar-os" name="sinal">
                 </div>
                 <div class="form-group">
@@ -3432,6 +3497,107 @@ window.addEventListener('DOMContentLoaded', function() {
             </form>
         </div>
     </div>
-    <div class="notification" id="notification"></div>
+    
+                <!-- Modal Falha Massiva -->
+                <div id="modalFalhaMassiva" class="modal-container" style="display:none;">
+                    <div class="modal-content">
+                        <span class="close-button" onclick="fecharModalFalhaMassiva()">&times;</span>
+                        <h1>Falha Massiva</h1>
+                        <form id="form-falha-massiva-modal">
+                            <div class="form-group">
+                                <label for="fm-rompimento">Nivel do Rompimento:</label>
+                                <select id="fm-rompimento" name="fm-rompimento">
+                                    <option value="">Selecione o nivel</option>
+                                    <option value="NIVEL 1">NIVEL 1</option>
+                                    <option value="NIVEL 2">NIVEL 2</option>
+                                    <option value="NIVEL 3">NIVEL 3</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="fm-caixas">Caixas:</label>
+                                <input type="text" id="fm-caixas" name="fm-caixas" placeholder="Ex: NL.CEO160">
+                            </div>
+                            <div class="form-group">
+                                <label for="fm-quantidade">Quantidade de Clientes:</label>
+                                <input type="text" id="fm-quantidade" name="fm-quantidade" placeholder="Ex: 72">
+                            </div>
+                            <div class="form-group">
+                                <label for="fm-hora-informada">Hora Informada:</label>
+                                <input type="text" id="fm-hora-informada" name="fm-hora-informada" placeholder="Ex: 5 HORAS">
+                            </div>
+                            <div class="form-group">
+                                <label for="fm-protocolo">Protocolo:</label>
+                                <input type="text" id="fm-protocolo" name="fm-protocolo" placeholder="Ex: 3672637">
+                            </div>
+                            <div class="form-group">
+                                <label for="fm-horario-queda">Horario de Queda:</label>
+                                <input type="text" id="fm-horario-queda" name="fm-horario-queda" placeholder="Ex: 19/02/2026 09:51:07">
+                            </div>
+                            <div class="form-group">
+                                <label for="fm-localizacao">Localizacao da CTO:</label>
+                                <input type="text" id="fm-localizacao" name="fm-localizacao" placeholder="Ex: https://www.google.com/maps/place/...">
+                            </div>
+                            <div class="form-actions">
+                                <button type="button" onclick="copiarDadosFalhaMassivaModal()">Copiar Dados</button>
+                                <button type="button" onclick="zerarFalhaMassiva()">Zerar Dados</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                <!-- Modal Retornos -->
+                <div id="modalRetornos" class="modal-container" style="display:none;">
+                    <div class="modal-content">
+                        <span class="close-button" onclick="fecharModalRetornos()">&times;</span>
+                        <h1>Retornos</h1>
+                        <form id="form-retornos">
+                            <div class="form-group">
+                                <label for="ret-protocolo">Protocolo:</label>
+                                <input type="text" id="ret-protocolo" name="ret-protocolo" placeholder="Ex: 3672637">
+                            </div>
+                            <div class="form-group">
+                                <label for="ret-nome">Nome do Cliente:</label>
+                                <input type="text" id="ret-nome" name="ret-nome" placeholder="Nome completo">
+                            </div>
+                            <div class="form-group">
+                                <label for="ret-numero">Numero:</label>
+                                <input type="text" id="ret-numero" name="ret-numero" placeholder="Ex: (67) 99999-9999">
+                            </div>
+
+                            <div class="form-group" style="margin-top:15px;">
+                                <label style="display:block; margin-bottom:10px; font-weight:bold; color:#dadf3f;">Situacao do Contato:</label>
+                                <div style="display:flex; flex-direction:column; gap:10px;">
+                                    <label style="display:flex; align-items:center; gap:10px; cursor:pointer; background:rgba(218,223,63,0.1); border:1px solid #dadf3f; border-radius:6px; padding:10px;">
+                                        <input type="radio" id="ret-opcao-contato" name="ret-situacao" value="contato" onchange="toggleRetornoOpcao('contato')" style="width:18px; height:18px; accent-color:#dadf3f;">
+                                        <span>Feito Contato e Realizado Atendimento</span>
+                                    </label>
+                                    <label style="display:flex; align-items:center; gap:10px; cursor:pointer; background:rgba(218,223,63,0.1); border:1px solid #dadf3f; border-radius:6px; padding:10px;">
+                                        <input type="radio" id="ret-opcao-semcontato" name="ret-situacao" value="semcontato" onchange="toggleRetornoOpcao('semcontato')" style="width:18px; height:18px; accent-color:#dadf3f;">
+                                        <span>Sem Contato</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div id="ret-campos-atendimento" style="display:none; margin-top:10px;">
+                                <div class="form-group">
+                                    <label for="ret-problema">Problema do Cliente:</label>
+                                    <textarea id="ret-problema" name="ret-problema" rows="2" placeholder="Descreva o problema relatado pelo cliente"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ret-procedimento">Procedimento Realizado:</label>
+                                    <textarea id="ret-procedimento" name="ret-procedimento" rows="2" placeholder="Descreva o que foi feito no atendimento"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" onclick="copiarDadosRetorno()">Copiar Dados</button>
+                                <button type="button" onclick="zerarRetornos()">Zerar Dados</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+<div class="notification" id="notification"></div>
 </body>
 </html>
