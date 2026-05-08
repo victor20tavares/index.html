@@ -1458,8 +1458,6 @@ Protocolo: ${protocolo}
 
 
     function copiarDadosGerarOS() {
-    const agendadoRaw = document.getElementById('agendado').value || "N/A";
-    const agendado = agendadoRaw !== "N/A" ? formatarData(agendadoRaw) : "N/A";
     const periodoSelect = document.getElementById('periodo');
     const periodo = periodoSelect.options[periodoSelect.selectedIndex].text || "N/A";
     const relatoCliente = document.getElementById('relato_cliente-gerar-os').value || "N/A";
@@ -1475,7 +1473,7 @@ Protocolo: ${protocolo}
     
     const texto = `==================================================
 
-Agendado: ${agendado} ${periodo}
+Período: ${periodo}
 
 ===================================================
 Relato do Cliente: ${relatoCliente}
@@ -1721,7 +1719,6 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
     function montarOS() {
-    document.getElementById('agendado').value = "N/A"; // Ou defina um valor padrão se necessário
     document.getElementById('nome-gerar-os').value = document.getElementById('nome').value;
     document.getElementById('telefone-gerar-os').value = document.getElementById('telefone').value;
     document.getElementById('user-gerar-os').value = document.getElementById('user').value;
@@ -1822,7 +1819,7 @@ function mostrarBotoesCliente122() {
     }
 
     function preencheraplicativo() {
-        window.location.href = 'aplicativos.html';
+        window.open('https://digitalnetms.com.br/apps/clientepf_zqil_nosd_zcqz_jtic_qhdg_mdvj_pgum/', '_blank');
     }
 
     function abrirModalRetornos() {
@@ -2315,7 +2312,7 @@ Obs: ${Obs1}
     }
 
     function outrosformularios() {
-        window.location.href = 'outrosformularios.html';
+        window.open('https://validacao.wuaze.com/login.php', '_blank');
     }
 
     function adicionarConfirmacao() {
@@ -3364,10 +3361,6 @@ window.addEventListener('DOMContentLoaded', function() {
                 <button type="button" id="btn-direcionamento" onclick="solicitacaodeencaixe()">Gerar encaixe</button>
             </div>    
             <form id="form-gerar-os">
-                <div class="form-group">
-                    <label for="agendado">Agendado para:</label>
-                    <input type="date" id="agendado" name="agendado">
-                </div>
                 <div class="periodo-container">
                     <label for="periodo" class="label-periodo">
                         Período:
