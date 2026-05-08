@@ -59,7 +59,7 @@
                     width: 100%;
                     max-width: 600px;
                     text-align: center;
-                    border: 2px solid #dadf3f;
+                    border: 1px solid rgba(74,143,212,0.6);
                     position: relative; /* Importante para posicionamento absoluto dos botões */
                 }
         
@@ -68,7 +68,7 @@
         }
         
         h1 {
-            color: #dadf3f; /* Verde neon */
+            color: #4a8fd4; /* Verde neon */
         }
         
         form {
@@ -104,7 +104,7 @@
         input[type="text"], input[type="tel"], textarea, select, input[type="date"] {
             width: 100%;
             padding: 8px;
-            border: 1px solid #dadf3f;
+            border: 1px solid #4a8fd4;
             border-radius: 5px;
             background-color: #e0e0e0;
             color: #000000;
@@ -113,7 +113,7 @@
         input[type="date"] {
             width: 100%; /* Mesma largura das textarea */
             padding: 8px; /* Mesmo padding das textarea */
-            border: 1px solid #dadf3f; /* Verde neon, mesma borda */
+            border: 1px solid #4a8fd4; /* Verde neon, mesma borda */
             border-radius: 5px; /* Bordas arredondadas */
             background-color: #e0e0e0; /* Mesma cor de fundo */
             color: #000000; /* Mesma cor de texto */
@@ -126,7 +126,7 @@
         
         
         button {
-            background-color: #dadf3f; /* Verde neon */
+            background-color: #4a8fd4; /* Verde neon */
             color: #000000; /* Preto */
             border: none;
             border-radius: 5px;
@@ -138,7 +138,7 @@
         }
         
         button:hover {
-            background-color: #a5c527; /* Verde neon mais escuro para o hover */
+            background-color: #2d5a9f; /* Verde neon mais escuro para o hover */
         }
         
         .form-actions {
@@ -157,7 +157,7 @@
         }
         
         #btnSemInternet {
-            background-color: #dadf3f; /* Verde neon */
+            background-color: #4a8fd4; /* Verde neon */
             color: #000000; /* Preto */
             border: none;
             border-radius: 5px;
@@ -167,7 +167,7 @@
         }
         
         #btnSemInternet:hover {
-            background-color: #a5c527; /* Verde neon mais escuro */
+            background-color: #2d5a9f; /* Verde neon mais escuro */
         }
         
         .footer-note {
@@ -201,7 +201,7 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #dadf3f; /* Verde neon */
+            background-color: #4a8fd4; /* Verde neon */
             color: #000000; /* Preto */
             padding: 10px 20px;
             border-radius: 5px;
@@ -245,7 +245,7 @@
         
             /* Outros estilos */
             .teste {
-                    background-color: #dadf3f; /* Verde neon */
+                    background-color: #4a8fd4; /* Verde neon */
                     color: #000000; /* Preto */
                     border: none;
                     border-radius: 5px;
@@ -333,7 +333,7 @@
 }
 
         .client-buttons button:hover {
-            background-color: #a5c527;
+            background-color: #2d5a9f;
 
         }
         
@@ -341,16 +341,16 @@
             width: 100%;
             max-width: 600px;
             padding: 30px;
-            background-color: rgba(0, 0, 0, 0.5); /* Preto com 50% de transparência */
+            background: linear-gradient(160deg, rgba(5,5,40,0.99) 0%, rgba(8,8,66,0.97) 100%); /* Preto com 50% de transparência */
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(68, 231, 18, 0.5);
             text-align: center;
-            border: 2px solid #dadf3f;
+            border: 1px solid rgba(74,143,212,0.6);
             margin-top: 80px;
         }
         
         .client-slot button {
-            background-color: #dadf3f; /* Verde neon */
+            background-color: #4a8fd4; /* Verde neon */
             color: #000000; /* Preto */
             border: none;
             border-radius: 5px;
@@ -432,7 +432,7 @@
             width: 100%;
             padding: 10px;
             margin: -10px 0; /* Margem padrão entre botões */
-            background-color: #dadf3f;
+            background-color: #4a8fd4;
             color: black;
             border: none;
             cursor: pointer;
@@ -444,7 +444,7 @@
         }
         
             .menu-escondido button:hover {
-                background-color: #a5c527;
+                background-color: #2d5a9f;
             }
         
             .overlay {
@@ -454,7 +454,7 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                background-color: rgba(0, 0, 0, 0.5);
+                background: linear-gradient(160deg, rgba(5,5,40,0.99) 0%, rgba(8,8,66,0.97) 100%);
                 z-index: 999;
             }
         
@@ -465,28 +465,29 @@
             /* Estilos para o modal */
             .modal-container {
             font-family: Arial, sans-serif;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
+            position: fixed !important;
+            z-index: 99999 !important;
+            left: 0 !important;
+            top: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
             overflow: auto;
-            background-color: rgba(41, 91, 165, 0.897); /* Fundo semitransparente azul */
+            background-color: rgba(4,4,42,0.90);
             display: flex;
-            justify-content: center; /* Centraliza horizontalmente */
-            align-items: center; /* Centraliza verticalmente */
+            justify-content: center;
+            align-items: center;
             padding: 20px;
+            box-sizing: border-box;
         }
         
         .modal-content {
-            background-color: rgba(0, 0, 0, 0.5); /* Preto com 50% de transparência */
+            background: linear-gradient(160deg, rgba(5,5,40,0.99) 0%, rgba(8,8,66,0.97) 100%); /* Preto com 50% de transparência */
             border-radius: 10px;
             padding: 30px;
             width: auto; /* Ajuste para auto ou uma largura específica conforme necessário */
             max-width: 600px; /* Ajuste a largura máxima conforme necessário */
             text-align: center;
-            border: 2px solid #dadf3f;
+            border: 1px solid rgba(74,143,212,0.6);
             position: relative;
             color: #ffffff; /* Texto branco */
             /* Novos estilos para centralização */
@@ -497,7 +498,7 @@
         
         /* Estilos para os elementos dentro do modal */
         .modal-content h1 {
-            color: #dadf3f;
+            color: #ffffff;
         }
         
         .modal-content .form-group {
@@ -518,16 +519,16 @@
         .modal-content input[type="date"] {
             width: 100%;
             padding: 8px;
-            border: 1px solid #dadf3f;
+            border: 1px solid #4a8fd4;
             border-radius: 5px;
-            background-color: #e0e0e0;
-            color: #000;
+            background-color: #dce8f5;
+            color: #05052e;
         }
         
         .modal-content button {
-            background-color: #dadf3f;
-            color: #000;
-            border: none;
+            background: linear-gradient(135deg, #04042a 0%, #080842 55%, #4a8fd4 100%);
+            color: #ffffff;
+            border: 1px solid #4a8fd4;
             border-radius: 5px;
             padding: 10px 15px;
             cursor: pointer;
@@ -535,7 +536,7 @@
         }
         
         .modal-content button:hover {
-            background-color: #a5c527;
+            background: linear-gradient(135deg, #06063a 0%, #0d0d6b 55%, #5a8fd4 100%);
         }
         
         .modal-content .form-actions {
@@ -593,7 +594,7 @@
             left: 0;
             background-color: #e0e0e0;
             color: #000;
-            border: 1px solid #dadf3f;
+            border: 1px solid #4a8fd4;
             border-radius: 5px;
             width: calc(100% - 10px); /* Ajuste para garantir que o menu não ultrapasse o elemento pai */
             box-sizing: border-box;
@@ -604,7 +605,7 @@
         }
         
         .modal-content .dropdown-menu div:hover {
-            background-color: #dadf3f;
+            background-color: #ffffff;
         }
         
         .close-button {
@@ -616,7 +617,7 @@
             width: 20px; /* Define a largura do botão */
             height: 20px; /* Define a altura do botão para igualar a largura */
             padding: 5px;
-            background-color: #dadf3f;
+            background-color: #4a8fd4;
             color: white;
             border-radius: 50%; /* Garante que o botão seja um círculo */
             border: none;
@@ -629,11 +630,11 @@
         
         /* Estilo para quando o mouse passa sobre o botão */
         .close-button:hover {
-            background-color: #a5c527; /* Cor de fundo mais escura para o hover */
+            background-color: #2d5a9f; /* Cor de fundo mais escura para o hover */
         }
         
         .dropdown-button {
-            background-color: #dadf3f;
+            background-color: #4a8fd4;
             border: none; /* Remove a borda padrão */
             cursor: pointer; /* Muda o cursor para indicar que é clicável */
             padding: 8px 12px; /* Ajuste o padding conforme necessário */
@@ -672,7 +673,7 @@
         }
         
         .dropdown-button {
-            background-color: #dadf3f;
+            background-color: #4a8fd4;
             border: none; /* Remove a borda padrão */
             cursor: pointer; /* Muda o cursor para indicar que é clicável */
             padding: 8px 12px; /* Ajuste o padding conforme necessário */
@@ -702,7 +703,7 @@
     top: 0px;
     left: 0px;
     padding: 5px 10px;
-    background-color: #dadf3f;
+    background-color: #4a8fd4;
     color: black;
     border: none;
     cursor: pointer;
@@ -805,7 +806,7 @@
     max-width: 90%; /* Mantém o modal responsivo */
     max-height: 80vh; /* Limita a altura para 80% da tela */
     overflow-y: auto; /* Ativa rolagem vertical se necessário */
-    border: 2px solid #dadf3f;
+    border: 1px solid rgba(74,143,212,0.6);
     color: #ffffff;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     font-size: 14px; /* Reduz o tamanho da fonte para ganhar espaço */
@@ -817,7 +818,7 @@
     top: 90px;
     padding: 10px 20px;
     font-size: 16px;
-    background-color: #dadf3f;
+    background-color: #4a8fd4;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -843,7 +844,7 @@
             width: 20px; /* Define a largura do botão */
             height: 20px; /* Define a altura do botão para igualar a largura */
             padding: 5px;
-            background-color: #dadf3f;
+            background-color: #4a8fd4;
             color: white;
             border-radius: 50%; /* Garante que o botão seja um círculo */
             border: none;
@@ -861,7 +862,7 @@
 }
 
 .p-copiavel:hover {
-    color: #dadf3f;            /* Cor quando passar o mouse */
+    color: #4a8fd4;            /* Cor quando passar o mouse */
     background: #1e3250;       /* Um fundo levemente diferente ao passar o mouse */
 }
 
@@ -872,7 +873,7 @@
     background: transparent;
 }
 .p-copiavel1:hover {
-    color: #dadf3f;      /* Cor destaque ao passar o mouse */
+    color: #4a8fd4;      /* Cor destaque ao passar o mouse */
   
 }
 
@@ -1170,7 +1171,7 @@ body.dark-mode #notepad-modal .modal-box {
 }
 
 button:hover, #btnverificacao:hover {
-    background-color: #a5c527;
+    background-color: #2d5a9f;
 }
 
 
@@ -1517,7 +1518,7 @@ Geolocalização: ${geolocalizacao}
             notification.style.display = "block";
             setTimeout(() => {
                 notification.style.display = "none";
-                notification.style.backgroundColor = "#dadf3f"; // Reset background color
+                notification.style.backgroundColor = "#4a8fd4"; // Reset background color
             }, 3000);
         });
 }
@@ -1784,8 +1785,10 @@ function mostrarBotoesCliente122() {
         document.getElementById('procedimentos_realizados').value = "LINK LOS NA OLT";
     }
 
-    function preencherfalhamassiva() {
-        document.getElementById('modalFalhaMassiva').style.display = 'block';
+    function abrirModalFalhaMassiva() {
+        var mFM = document.getElementById('modalFalhaMassiva');
+     mFM.style.display = 'flex';
+     mFM.style.zIndex = '99999';
     }
 
     function fecharModalFalhaMassiva() {
@@ -1822,7 +1825,7 @@ function mostrarBotoesCliente122() {
         window.location.href = 'aplicativos.html';
     }
 
-    function preencherverificacao() {
+    function abrirModalRetornos() {
         // Reset form
         document.getElementById('ret-protocolo').value = '';
         document.getElementById('ret-nome').value = '';
@@ -1832,7 +1835,9 @@ function mostrarBotoesCliente122() {
         document.getElementById('ret-opcao-contato').checked = false;
         document.getElementById('ret-opcao-semcontato').checked = false;
         document.getElementById('ret-campos-atendimento').style.display = 'none';
-        document.getElementById('modalRetornos').style.display = 'block';
+        var mRet = document.getElementById('modalRetornos');
+     mRet.style.display = 'flex';
+     mRet.style.zIndex = '99999';
     }
 
     function fecharModalRetornos() {
@@ -2857,7 +2862,7 @@ function copiarTexto(elemento) {
         navigator.clipboard.writeText(elemento.textContent)
             .then(function() {
                 // Opcional: feedback visual
-                elemento.style.background = '#dadf3f';
+                elemento.style.background = '#4a8fd4';
                 setTimeout(() => elemento.style.background = '', 300);
             });
     } else {
@@ -2869,7 +2874,7 @@ function copiarTexto(elemento) {
         try {
             document.execCommand('copy');
             // Opcional: feedback visual
-            elemento.style.background = '#dadf3f';
+            elemento.style.background = '#4a8fd4';
             setTimeout(() => elemento.style.background = '', 300);
         } catch (err) {}
         window.getSelection().removeAllRanges();
@@ -3131,9 +3136,9 @@ window.addEventListener('DOMContentLoaded', function() {
         </div>
         <div class="grupo-botoes-especiais">
         <button id="openPopup">Digistatus</button>
-        <button type="button" id="btnverificacao" onclick="preencherverificacao()">Retornos</button>
+        <button type="button" id="btnverificacao" onclick="abrirModalRetornos()">Retornos</button>
         <button type="button" id="btnAplicativo" onclick="preencheraplicativo()">Aplicativo</button>
-        <button type="button" id="btnfalhamassiva" onclick="preencherfalhamassiva()">Falha Massiva</button>
+        <button type="button" id="btnfalhamassiva" onclick="abrirModalFalhaMassiva()">Falha Massiva</button>
         <button type="button" id="btnvagas" onclick="outrosformularios()">Outros formularios</button>
     </div>
     </div>
@@ -3498,7 +3503,14 @@ window.addEventListener('DOMContentLoaded', function() {
         </div>
     </div>
     
-                <!-- Modal Falha Massiva -->
+
+<div class="notification" id="notification"></div>
+
+</div>
+</div>
+
+<div class="notification" id="notification"></div>
+<!-- Modal Falha Massiva -->
                 <div id="modalFalhaMassiva" class="modal-container" style="display:none;">
                     <div class="modal-content">
                         <span class="close-button" onclick="fecharModalFalhaMassiva()">&times;</span>
@@ -3566,14 +3578,14 @@ window.addEventListener('DOMContentLoaded', function() {
                             </div>
 
                             <div class="form-group" style="margin-top:15px;">
-                                <label style="display:block; margin-bottom:10px; font-weight:bold; color:#dadf3f;">Situacao do Contato:</label>
+                                <label style="display:block; margin-bottom:10px; font-weight:bold; color:#4a8fd4;">Situacao do Contato:</label>
                                 <div style="display:flex; flex-direction:column; gap:10px;">
-                                    <label style="display:flex; align-items:center; gap:10px; cursor:pointer; background:rgba(218,223,63,0.1); border:1px solid #dadf3f; border-radius:6px; padding:10px;">
-                                        <input type="radio" id="ret-opcao-contato" name="ret-situacao" value="contato" onchange="toggleRetornoOpcao('contato')" style="width:18px; height:18px; accent-color:#dadf3f;">
+                                    <label style="display:flex; align-items:center; gap:10px; cursor:pointer; background:rgba(218,223,63,0.1); border:1px solid #4a8fd4; border-radius:6px; padding:10px;">
+                                        <input type="radio" id="ret-opcao-contato" name="ret-situacao" value="contato" onchange="toggleRetornoOpcao('contato')" style="width:18px; height:18px; accent-color:#4a8fd4;">
                                         <span>Feito Contato e Realizado Atendimento</span>
                                     </label>
-                                    <label style="display:flex; align-items:center; gap:10px; cursor:pointer; background:rgba(218,223,63,0.1); border:1px solid #dadf3f; border-radius:6px; padding:10px;">
-                                        <input type="radio" id="ret-opcao-semcontato" name="ret-situacao" value="semcontato" onchange="toggleRetornoOpcao('semcontato')" style="width:18px; height:18px; accent-color:#dadf3f;">
+                                    <label style="display:flex; align-items:center; gap:10px; cursor:pointer; background:rgba(218,223,63,0.1); border:1px solid #4a8fd4; border-radius:6px; padding:10px;">
+                                        <input type="radio" id="ret-opcao-semcontato" name="ret-situacao" value="semcontato" onchange="toggleRetornoOpcao('semcontato')" style="width:18px; height:18px; accent-color:#4a8fd4;">
                                         <span>Sem Contato</span>
                                     </label>
                                 </div>
@@ -3597,7 +3609,5 @@ window.addEventListener('DOMContentLoaded', function() {
                         </form>
                     </div>
                 </div>
-
-<div class="notification" id="notification"></div>
 </body>
 </html>
