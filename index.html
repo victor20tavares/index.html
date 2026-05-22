@@ -1458,8 +1458,7 @@ Protocolo: ${protocolo}
 
 
     function copiarDadosGerarOS() {
-    const periodoSelect = document.getElementById('periodo');
-    const periodo = periodoSelect.options[periodoSelect.selectedIndex].text || "N/A";
+    const observacao = document.getElementById('observacao-os').value || "N/A";
     const relatoCliente = document.getElementById('relato_cliente-gerar-os').value || "N/A";
     const procedimentosRealizados = document.getElementById('problema_identificado').value || "N/A";
     const nome = document.getElementById('nome-gerar-os').value || "N/A";
@@ -1473,7 +1472,7 @@ Protocolo: ${protocolo}
     
     const texto = `==================================================
 
-Período: ${periodo}
+${observacao}
 
 ===================================================
 Relato do Cliente: ${relatoCliente}
@@ -1970,14 +1969,11 @@ window.open("https://docs.google.com/spreadsheets/d/1mD7OTkXI4JOwe2A9Ncre-yAx4UU
 }
 
 function mostrarAlerta() {
-            const agendado = document.getElementById('agendado').value;
-            const periodo = document.getElementById('periodo').options[document.getElementById('periodo').selectedIndex].text || "N/A";
-
-            if (agendado && periodo !== "N/A") {
-                const dataFormatada = formatarData(agendado);
-                alert(`Tenho agendamento para dia ${dataFormatada} no período da ${periodo}. Consegue receber o técnico nesse período? `);
+            const observacao = document.getElementById('observacao-os').value;
+            if (observacao && observacao.trim() !== "") {
+                alert(`Anotei a seguinte observação para o técnico: "${observacao}". Posso ajudar em algo mais?`);
             } else {
-                alert("Por favor, selecione uma data e um período.");
+                alert("Por favor, preencha a observação antes de confirmar.");
             }
         }
 
@@ -2312,7 +2308,7 @@ Obs: ${Obs1}
     }
 
     function outrosformularios() {
-        window.open('https://validacao.wuaze.com/login.php', '_blank');
+        window.open('https://validacao.free.nf/login.php', '_blank');
     }
 
     function adicionarConfirmacao() {
@@ -3361,18 +3357,19 @@ window.addEventListener('DOMContentLoaded', function() {
                 <button type="button" id="btn-direcionamento" onclick="solicitacaodeencaixe()">Gerar encaixe</button>
             </div>    
             <form id="form-gerar-os">
-                <div class="periodo-container">
-                    <label for="periodo" class="label-periodo">
-                        Período:
+                <div class="periodo-container" style="flex-direction:column; align-items:flex-start; width:100%;">
+                    <label for="observacao-os" class="label-periodo">
+                        Observação:
                     </label>
-                    <select id="periodo" onchange="selecionarHorario(this.value)">
-                        <option value="">Selecione o período</option>
-                        <option value="manha">Manhã (07:30 às 12:00)</option>
-                        <option value="tarde">Tarde (13:00 às 17:00)</option>
-                        <option value="noite">Noite (17:00 às 20:00)</option>
-                    </select>
-                    <button type="button" class="small-button" onclick="mostrarAlerta()">✍</button>
-                    <button type="button" class="small-button" onclick="mostrarAlerta1()">✔</button>
+                    <div style="display:flex; gap:6px; margin-bottom:4px; flex-wrap:wrap;">
+                        <button type="button" class="small-button" style="font-size:11px; padding:3px 7px;" onclick="document.getElementById('observacao-os').value='Obs técnica: Cliente pediu para ir a partir das: '">⏰ A partir das</button>
+                        <button type="button" class="small-button" style="font-size:11px; padding:3px 7px;" onclick="document.getElementById('observacao-os').value='Obs técnica: Cliente pediu para ligar antes de ir.'">📞 Ligar antes</button>
+                        <button type="button" class="small-button" style="font-size:11px; padding:3px 7px;" onclick="document.getElementById('observacao-os').value='Obs técnica: Cliente não estará em casa, responsável: '">🏠 Responsável</button>
+                        <button type="button" class="small-button" style="font-size:11px; padding:3px 7px;" onclick="document.getElementById('observacao-os').value=''">🗑 Limpar</button>
+                        <button type="button" class="small-button" onclick="mostrarAlerta()">✍</button>
+                        <button type="button" class="small-button" onclick="mostrarAlerta1()">✔</button>
+                    </div>
+                    <textarea id="observacao-os" rows="2" placeholder="Ex: Obs técnica: Cliente pediu para ir a partir das: 14:00 / Cliente pediu para ligar antes de ir." style="width:100%; box-sizing:border-box; background:#1a1a1a; color:#fff; border:1px solid rgba(74,143,212,0.6); border-radius:4px; padding:6px; font-size:13px; resize:vertical;"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="relato_cliente-gerar-os">Relato do Cliente:</label>
